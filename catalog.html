@@ -1,0 +1,3679 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Каталог | BYME</title>
+ v20: export fixed - site CSS retained in downloaded HTML 
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Cormorant+Garamond:wght@600;700&amp;family=Caveat:wght@700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --bg: #f5f5f2;
+      --ink: #111111;
+      --muted: #6d6d6d;
+      --line: #d8d7d2;
+      --pink: #ff4b78;
+      --soft-pink: #f8dde4;
+      --white: #ffffff;
+      --shadow: 0 16px 40px rgba(0,0,0,.06);
+      --radius-xl: 32px;
+      --radius-lg: 26px;
+      --radius-md: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .shell { width: min(1660px, calc(100% - 32px)); margin: 0 auto; }
+    .site-header { position: sticky; top: 0; z-index: 50; background: rgba(245,245,242,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .header-row { display: grid; grid-template-columns: 260px 1fr auto; align-items: center; min-height: 88px; }
+    .brand { font-size: 58px; font-weight: 800; line-height: 1; letter-spacing: -.07em; }
+    .menu { display: flex; justify-content: center; gap: 48px; font-size: 17px; font-weight: 700; }
+    .menu a { position: relative; padding: 4px 0; }
+    .menu a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -8px; height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: center; transition: transform .22s ease; }
+    .menu a:hover::after { transform: scaleX(1); }
+    .toolbar-wrap { height: 88px; display:flex; align-items:center; padding:0 24px; background: var(--soft-pink); border-left: 1px solid rgba(0,0,0,.04); }
+    .toolbar { display:flex; align-items:center; gap:24px; }
+    .icon-btn { border:0; background:transparent; padding:0; width:32px; height:32px; position: relative; cursor:pointer; }
+    .icon-btn svg { width: 100%; height: 100%; stroke: #4b4b4b; stroke-width: 1.9; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    .badge { position:absolute; right:-7px; top:-7px; min-width:18px; height:18px; border-radius:999px; background:#ff3866; color:#fff; font-size:10px; font-weight:800; display:grid; place-items:center; padding:0 4px; }
+
+    .hero { padding-top: 12px; }
+    .hero-stage { position:relative; min-height: 810px; overflow: hidden; background: linear-gradient(90deg, #f7f7f5 0%, #f7f7f5 72%, #f4e6ea 100%); border-top: 1px solid rgba(0,0,0,.03); }
+    .hero-ghost { position:absolute; left:70px; top:20px; font-size: clamp(270px, 26vw, 390px); line-height: .84; font-weight: 800; letter-spacing: -.09em; z-index: 1; }
+    .hero-script { position:absolute; left:66px; top: 250px; font-family:'Caveat', cursive; font-size: 104px; line-height: .9; color: #ff98b4; transform: rotate(-6deg); z-index: 3; }
+    .hero-copy { position:absolute; left:70px; top: 470px; z-index: 4; max-width: 1080px; }
+    .hero-title { margin:0; font-family:'Cormorant Garamond', Georgia, serif; font-size: clamp(88px, 6vw, 104px); line-height: .9; font-weight:700; letter-spacing: -.045em; text-transform: uppercase; max-width: 1040px; }
+    .hero-text { margin: 46px 0 0; font-size: 28px; line-height: 1.28; color:#252525; }
+    .hero-cta { margin-top: 44px; display:inline-flex; align-items:center; gap:10px; padding: 22px 38px; border:0; border-radius:999px; background: var(--pink); color:#fff; font-size:22px; font-weight:800; box-shadow: var(--shadow); cursor:pointer; }
+    .hero-model { position:absolute; right:68px; bottom:0; width:min(560px, 36vw); z-index:2; }
+
+    .section { padding: 54px 0 72px; }
+    .section-head { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom: 28px; }
+    .section-kicker { font-size: 13px; letter-spacing: .20em; font-weight: 800; text-transform: uppercase; color: var(--ink); opacity: .9; margin-bottom: 8px; }
+    .section-title { margin:0; font-family:'Cormorant Garamond', Georgia, serif; font-size: clamp(82px, 5.5vw, 118px); line-height: .88; font-weight:700; letter-spacing:-.045em; text-transform: uppercase; }
+    .section-link { font-size: 19px; font-weight: 700; border-bottom: 2px solid rgba(0,0,0,.68); padding-bottom: 8px; white-space: nowrap; align-self: flex-end; }
+
+    .catalog-grid, .products-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .category-card, .product { background:#fff; border-radius: 30px; overflow:hidden; box-shadow: var(--shadow); }
+    .category-card { position: relative; min-height: 430px; }
+    .category-card img { width:100%; height:100%; object-fit: cover; }
+    .category-card::after { content:''; position:absolute; inset:0; background: linear-gradient(to top, rgba(0,0,0,.66), rgba(0,0,0,.08) 56%); }
+    .category-label { position:absolute; left:22px; bottom:20px; z-index:2; color:#fff; font-size: 28px; font-weight:800; line-height:1.04; text-transform:uppercase; letter-spacing:-.03em; }
+
+    .product { padding: 12px 12px 18px; }
+    .product-visual { position:relative; border-radius: 22px; overflow:hidden; background:#efefec; aspect-ratio: .86; }
+    .product-visual img { width:100%; height:100%; object-fit:cover; }
+    .product-fav { position:absolute; right:12px; top:12px; width:42px; height:42px; border:0; border-radius:999px; background:rgba(255,255,255,.9); box-shadow:0 6px 16px rgba(0,0,0,.08); display:grid; place-items:center; cursor:pointer; }
+    .product-fav svg { width:22px; height:22px; stroke:#4d4d4d; stroke-width:1.9; fill:none; }
+    .product h3 { margin:16px 0 8px; font-size: 18px; line-height:1.25; }
+    .price { font-size: 24px; font-weight: 800; margin-bottom: 14px; }
+    .buy-btn { width:100%; border:1.5px solid #111; background:#fff; border-radius:999px; padding:14px 16px; font-size:16px; font-weight:800; cursor:pointer; }
+    .buy-btn:hover { background:#111; color:#fff; }
+
+    .promo-image-wrap { border-radius: 34px; overflow:hidden; box-shadow: var(--shadow); background:#fff; }
+    .promo-image-wrap img { width:100%; height:auto; display:block; }
+
+    .online-box { background:#0d0d0d; color:#fff; border-radius: 42px; padding: 58px 62px; display:grid; grid-template-columns: 1.12fr .88fr; gap: 52px; align-items:center; }
+    .online-kicker { font-size: 12px; font-weight: 800; letter-spacing:.18em; text-transform:uppercase; margin-bottom: 20px; opacity:.95; }
+    .online-title { margin:0; font-family:'Cormorant Garamond', Georgia, serif; font-size: clamp(90px, 8vw, 124px); line-height: .86; font-weight:700; letter-spacing: -.04em; text-transform: uppercase; }
+    .online-copy { font-size: 24px; line-height: 1.38; max-width: 700px; }
+    .online-cta { margin-top: 26px; display:inline-flex; align-items:center; gap:10px; padding: 22px 34px; border-radius:999px; background: var(--pink); color:#fff; font-size: 20px; font-weight: 800; }
+
+    .review-info { display:grid; grid-template-columns: 1.7fr .9fr; gap: 40px; align-items:start; }
+    .reviews-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .review-card { background:#fff; border:1px solid #e3e1da; border-radius: 30px; padding: 26px 28px 30px; min-height: 326px; }
+    .avatar { width: 58px; height:58px; border-radius:999px; overflow:hidden; margin-bottom: 20px; background:#ececec; }
+    .avatar img { width:100%; height:100%; object-fit:cover; }
+    .stars { color: var(--pink); font-size: 18px; letter-spacing: 1px; margin-bottom: 14px; }
+    .review-name { font-size: 20px; font-weight: 800; margin-bottom: 18px; }
+    .review-card p { margin:0; font-size: 20px; line-height: 1.42; color:#232323; }
+    .info-wrap .section-kicker { margin-bottom: 4px; }
+    .info-title { margin:0 0 8px; font-family:'Cormorant Garamond', Georgia, serif; font-size: clamp(70px, 5vw, 96px); line-height: .9; font-weight:700; letter-spacing:-.04em; text-transform: uppercase; }
+    .info-list { border-top: 1px solid var(--line); }
+    .info-item { display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 24px 0; border-bottom:1px solid var(--line); font-size: 20px; font-weight: 700; }
+    .newsletter { margin-top: 26px; background:#0d0d0d; color:#fff; border-radius: 34px; padding: 28px 34px; display:grid; grid-template-columns: 1.2fr 1fr auto; gap:18px; align-items:center; }
+    .newsletter-title { margin:0; font-family:'Cormorant Garamond', Georgia, serif; font-size: clamp(38px, 3.2vw, 58px); line-height: .92; font-weight:700; letter-spacing:-.03em; text-transform: uppercase; }
+    .newsletter-input { width:100%; border:1.5px solid #414141; border-radius:999px; background:#171717; color:#fff; padding: 19px 24px; font-size: 18px; outline:none; }
+    .newsletter-btn { border:0; border-radius:999px; background: var(--pink); color:#fff; padding: 19px 34px; font-size: 18px; font-weight:800; cursor:pointer; }
+
+    footer { padding: 26px 0 56px; }
+    .footer-grid { border-top: 1px solid var(--line); padding-top: 34px; display:grid; grid-template-columns: 1.25fr 1fr 1fr 1fr; gap: 28px; }
+    .footer-brand { font-size: 54px; font-weight: 800; line-height: 1; letter-spacing: -.07em; margin-bottom: 26px; }
+    .footer-title { font-size: 14px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 22px; }
+    .footer-col p, .footer-col a { display:block; margin:0 0 12px; font-size: 18px; line-height: 1.55; color:#272727; }
+
+    .toast { position: fixed; left:50%; bottom:26px; transform:translateX(-50%); background:#111; color:#fff; padding:14px 18px; border-radius:999px; font-size:14px; font-weight:700; opacity:0; pointer-events:none; transition:.25s; z-index:100; }
+    .toast.show { opacity:1; }
+
+    @media (max-width: 1320px) {
+      .hero-stage { min-height: 740px; }
+      .hero-copy { top: 430px; max-width: 900px; }
+      .hero-title { font-size: 88px; }
+      .hero-text { font-size: 24px; margin-top: 34px; }
+      .hero-model { width:min(500px, 38vw); right: 40px; }
+      .hero-script { font-size: 92px; top: 225px; }
+      .hero-ghost { left:52px; font-size: 28vw; }
+    }
+    @media (max-width: 1080px) {
+      .header-row { grid-template-columns: 1fr auto; gap: 16px; }
+      .menu { display:none; }
+      .brand { font-size: 46px; }
+      .toolbar-wrap { height:76px; }
+      .hero-stage { min-height: 990px; }
+      .hero-ghost { left:34px; top:24px; font-size: 34vw; }
+      .hero-script { left:32px; top: 230px; font-size: 74px; }
+      .hero-copy { left:34px; top: 510px; right:34px; max-width: none; }
+      .hero-title { font-size: 74px; max-width: 760px; }
+      .hero-model { width: min(420px, 62vw); right: 20px; }
+      .catalog-grid, .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .review-info { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+      .online-box { grid-template-columns: 1fr; }
+      .newsletter { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 720px) {
+      .shell { width: min(100%, calc(100% - 20px)); }
+      .hero-stage { min-height: 840px; }
+      .hero-ghost { left:20px; top:34px; font-size: 40vw; }
+      .hero-script { left:18px; top: 140px; font-size: 58px; }
+      .hero-model { width: min(340px, 74vw); right: -20px; }
+      .hero-copy { left:18px; top: 450px; right:18px; }
+      .hero-title { font-size: 56px; }
+      .hero-text { font-size: 20px; }
+      .hero-cta { font-size: 18px; padding: 18px 28px; }
+      .section { padding: 44px 0 58px; }
+      .section-title { font-size: 56px; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .section-link { font-size: 17px; }
+      .catalog-grid, .products-grid, .reviews-grid { grid-template-columns: 1fr; }
+      .online-box { padding: 34px 24px; border-radius: 28px; }
+      .online-title { font-size: 60px; }
+      .online-copy { font-size: 20px; }
+      .review-card p, .info-item { font-size: 18px; }
+      .newsletter-title { font-size: 34px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+<style id="byme-v19-fixes">
+  /* HEADER INTERACTIONS */
+  .icon-btn{
+    border-radius:999px;
+    transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+  }
+  .icon-btn:hover{
+    transform:translateY(-2px) scale(1.08);
+    background:rgba(255,255,255,.72);
+    box-shadow:0 7px 20px rgba(0,0,0,.10);
+  }
+  .icon-btn:hover svg{stroke:#111}
+  .icon-btn:active{transform:scale(.96)}
+
+  /* DROP + SALE: real editable elements */
+  .drop-section-head{
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+  }
+  .drop-mini-brand{
+    position:relative;
+    font-size:34px;font-weight:800;letter-spacing:-.06em;
+    padding:0 20px;
+  }
+  .drop-mini-brand:before,.drop-mini-brand:after{
+    content:"";position:absolute;top:50%;width:150px;height:1px;background:#bcbab3;
+  }
+  .drop-mini-brand:before{right:100%}
+  .drop-mini-brand:after{left:100%}
+
+  .drop-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .drop-card{
+    position:relative;min-height:560px;border-radius:34px;overflow:hidden;
+    padding:48px;box-shadow:0 18px 42px rgba(0,0,0,.08);
+  }
+  .drop-card-new{background:#d8ff00;color:#111}
+  .drop-card-sale{background:#ff4b78;color:#fff}
+  .drop-content{position:relative;z-index:3;max-width:470px}
+  .drop-label{font-size:26px;font-weight:800;letter-spacing:.08em}
+  .drop-script{
+    margin-top:6px;font-family:'Caveat',cursive;font-size:54px;line-height:.9;color:#ff4b78;
+    transform:rotate(-4deg);transform-origin:left center;display:inline-block
+  }
+  .drop-title{
+    margin:26px 0 0;font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:clamp(46px,4.1vw,76px);line-height:.88;font-weight:700;
+    letter-spacing:-.04em;text-transform:uppercase
+  }
+  .drop-percent{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:clamp(100px,8vw,154px);line-height:.72;font-weight:700;letter-spacing:-.06em
+  }
+  .drop-copy{font-size:19px;line-height:1.45;margin:26px 0 0;max-width:420px}
+  .drop-action-btn{
+    margin-top:28px;border:0;border-radius:999px;background:#111;color:#fff;
+    padding:17px 25px;font-size:17px;font-weight:800;cursor:pointer;
+    transition:transform .2s ease,box-shadow .2s ease,background .2s ease
+  }
+  .drop-action-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.17)}
+  .drop-action-light{background:#fff;color:#111}
+  .drop-image-wrap{
+    position:absolute;right:-35px;bottom:-55px;width:310px;height:430px;
+    border-radius:160px 160px 28px 28px;overflow:hidden;z-index:2;
+    transform:rotate(4deg);box-shadow:0 20px 45px rgba(0,0,0,.18)
+  }
+  .drop-image-wrap-sale{right:-5px;bottom:-45px;transform:rotate(-4deg)}
+  .drop-edit-image{width:100%;height:100%;object-fit:cover}
+
+  /* Restore INFO */
+  .info-wrap{position:relative!important;width:auto!important;height:auto!important;inset:auto!important;transform:none!important}
+  .info-wrap .section-kicker,.info-wrap .info-title,.info-wrap .info-item{
+    position:relative!important;inset:auto!important;transform:none!important;width:auto!important;height:auto!important
+  }
+
+  /* EDITOR */
+  .byme-editor-v19{
+    position:fixed;left:16px;bottom:16px;z-index:99999;width:330px;
+    background:rgba(15,15,15,.97);color:#fff;border-radius:18px;padding:14px;
+    box-shadow:0 18px 60px rgba(0,0,0,.28);font-family:Inter,system-ui,sans-serif
+  }
+  .byme-editor-v19 h3{margin:0 0 10px;font-size:16px}
+  .byme-editor-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .byme-editor-v19 button{border:0;border-radius:11px;padding:10px;font-weight:800;cursor:pointer}
+  .ed-primary{background:#ff4b78;color:#fff}.ed-dark{background:#2b2b2b;color:#fff}
+  .ed-help{font-size:11px;line-height:1.4;color:#ccc;margin:10px 0 0}
+  .ed-inspector{display:none;border-top:1px solid #3c3c3c;margin-top:10px;padding-top:8px}
+  body.byme-editing-v19 .ed-inspector{display:block}
+  .ed-row{display:grid;grid-template-columns:78px 1fr;gap:8px;align-items:center;margin:6px 0}
+  .ed-row label{font-size:11px;color:#cfcfcf}
+  .ed-row input,.ed-row select{width:100%;padding:7px;background:#222;border:1px solid #444;border-radius:8px;color:#fff}
+  body.byme-editing-v19 [data-v19-edit="1"]{outline:1px dashed rgba(255,75,120,.42);outline-offset:3px}
+  .v19-selected{outline:2px solid #ff4b78!important;outline-offset:4px!important}
+  .v19-move-handle{
+    position:absolute;display:none;z-index:100001;width:28px;height:28px;border-radius:8px;
+    background:#111;color:#fff;text-align:center;line-height:28px;font-weight:800;cursor:move;
+    box-shadow:0 5px 15px rgba(0,0,0,.25);user-select:none
+  }
+  body.byme-editing-v19 .v19-move-handle{display:block}
+  body.byme-editing-v19 [data-v19-resize="1"]{resize:both;overflow:auto;min-width:40px;min-height:24px}
+  .v19-toast{
+    position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:100002;
+    background:#111;color:#fff;padding:10px 16px;border-radius:999px;font-weight:800;
+    opacity:0;pointer-events:none;transition:.2s
+  }
+  .v19-toast.show{opacity:1}
+
+  /* Search/account/cart UI */
+  .quick-pop{
+    position:fixed;right:24px;top:102px;z-index:10000;width:min(360px,calc(100vw - 32px));
+    background:#fff;border:1px solid #e4e1da;border-radius:20px;padding:18px;
+    box-shadow:0 18px 50px rgba(0,0,0,.14);display:none
+  }
+  .quick-pop.show{display:block}
+  .quick-pop h4{margin:0 0 12px;font-size:18px}
+  .quick-pop input{width:100%;padding:12px 14px;border:1px solid #ccc;border-radius:999px}
+  .quick-pop .quick-btn{margin-top:12px;width:100%;border:0;border-radius:999px;padding:12px;background:#111;color:#fff;font-weight:800;cursor:pointer}
+
+  @media(max-width:900px){
+    .drop-grid{grid-template-columns:1fr}
+    .drop-card{min-height:530px;padding:34px}
+    .byme-editor-v19{width:300px}
+  }
+</style>
+<style id="byme-v21-drop-css">
+  .promo-brand-line{
+    display:grid;grid-template-columns:1fr auto 1fr;gap:28px;align-items:center;
+    margin:0 34px 28px;
+  }
+  .promo-brand-line span{height:1px;background:#d3d0ca}
+  .promo-brand-line strong{
+    font-family:'Inter',sans-serif;font-size:42px;line-height:1;font-weight:600;
+    letter-spacing:.28em;padding-left:.28em;
+  }
+
+  .promo-two-cards{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .promo-card{
+    position:relative;height:530px;border-radius:28px;overflow:hidden;
+    display:grid;grid-template-columns:55% 45%;box-shadow:0 18px 42px rgba(0,0,0,.08);
+  }
+  .promo-drop{background:#d8ef3f;color:#111}
+  .promo-sale{background:#f72559;color:#fff}
+
+  .promo-copy-col{
+    position:relative;z-index:3;padding:48px 0 42px 48px;
+    display:flex;flex-direction:column;align-items:flex-start;height:100%;
+  }
+  .promo-photo-col{
+    position:relative;z-index:2;height:100%;overflow:hidden;
+  }
+  .promo-photo{
+    width:100%;height:100%;object-fit:cover;object-position:center;
+  }
+
+  .promo-drop-word{
+    font-family:'Inter',sans-serif;font-weight:800;font-size:86px;line-height:.88;
+    letter-spacing:-.07em;
+  }
+  .promo-coming{
+    font-family:'Caveat',cursive;color:#ff3d75;font-size:58px;line-height:.8;
+    transform:rotate(-5deg);transform-origin:left center;margin:4px 0 52px 4px;
+    white-space:nowrap;
+  }
+
+  /* Explicitly sans-serif, same family/feel as the sale supporting copy */
+  .promo-small-copy{
+    font-family:'Inter',sans-serif;font-size:22px;line-height:1.35;font-weight:500;
+    letter-spacing:-.02em;
+  }
+  .promo-small-copy-light{color:rgba(255,255,255,.94)}
+
+  .promo-sale-percent{
+    font-family:'Inter',sans-serif;font-weight:800;font-size:112px;line-height:.78;
+    letter-spacing:-.07em;margin-top:6px;
+  }
+  .promo-sale-title{
+    font-family:'Inter',sans-serif;font-weight:800;font-size:36px;line-height:1;
+    margin-top:26px;margin-bottom:34px;
+  }
+
+  /* both buttons are pushed to the same baseline */
+  .promo-main-btn{
+    margin-top:auto;min-width:330px;height:72px;padding:0 28px;border-radius:7px;
+    display:flex;align-items:center;justify-content:space-between;gap:22px;
+    font-family:'Inter',sans-serif;font-size:17px;font-weight:700;letter-spacing:.01em;
+    cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .promo-main-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.16)}
+  .promo-main-btn span{font-size:38px;font-weight:300;line-height:1}
+  .promo-main-btn-dark{background:#111;color:#fff;border:1px solid #111}
+  .promo-main-btn-light{background:#fff;color:#111;border:1px solid rgba(255,255,255,.85)}
+
+  @media(max-width:1050px){
+    .promo-two-cards{grid-template-columns:1fr}
+    .promo-card{height:520px}
+  }
+  @media(max-width:650px){
+    .promo-brand-line{margin-left:12px;margin-right:12px;gap:16px}
+    .promo-brand-line strong{font-size:30px}
+    .promo-card{height:600px;grid-template-columns:1fr}
+    .promo-copy-col{padding:32px}
+    .promo-photo-col{position:absolute;right:0;top:0;width:48%;height:100%;opacity:.75}
+    .promo-copy-col{width:70%}
+    .promo-drop-word{font-size:68px}
+    .promo-sale-percent{font-size:88px}
+    .promo-main-btn{min-width:260px}
+  }
+</style>
+<style id="byme-v22-reviews-fix">
+  /* REVIEWS + INFO: headings share one baseline */
+  #reviews .reviews-info-layout{
+    display:grid;
+    grid-template-columns:minmax(0, 1.75fr) minmax(330px, .85fr);
+    grid-template-areas:
+      "head-left head-right"
+      "content-left content-right";
+    column-gap:40px;
+    row-gap:28px;
+    align-items:start;
+  }
+  #reviews .reviews-head-left{grid-area:head-left;}
+  #reviews .reviews-head-right{grid-area:head-right;}
+  #reviews .reviews-content-left{grid-area:content-left;}
+  #reviews .reviews-content-right{grid-area:content-right;}
+
+  #reviews .reviews-info-head{
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    min-height:130px;
+  }
+
+  #reviews .reviews-info-head .section-kicker{
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0 0 8px!important;
+  }
+
+  #reviews .reviews-head-left .section-title,
+  #reviews .reviews-head-right .info-title{
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0!important;
+    font-family:'Cormorant Garamond', Georgia, serif;
+    font-size:clamp(70px,5vw,96px);
+    line-height:.88;
+    font-weight:700;
+    letter-spacing:-.04em;
+    text-transform:uppercase;
+  }
+
+  /* 4 reviews compactly fit in a 2 x 2 grid */
+  #reviews .reviews-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:18px!important;
+    margin:0!important;
+  }
+
+  #reviews .review-card{
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    width:auto!important;
+    height:auto!important;
+    min-height:255px!important;
+    padding:22px 24px 24px!important;
+  }
+
+  #reviews .avatar{
+    width:52px!important;
+    height:52px!important;
+    margin:0 0 15px!important;
+  }
+  #reviews .stars{margin-bottom:10px!important;}
+  #reviews .review-name{margin-bottom:12px!important;}
+  #reviews .review-card p{
+    font-size:18px!important;
+    line-height:1.38!important;
+  }
+
+  #reviews .reviews-content-right .info-list{
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    width:auto!important;
+    margin:0!important;
+    border-top:1px solid var(--line);
+  }
+  #reviews .reviews-content-right .info-item{
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    width:auto!important;
+    height:auto!important;
+    padding:23px 0!important;
+  }
+
+  #reviews .newsletter-slot{
+    margin-top:28px;
+  }
+  #reviews .newsletter{
+    margin-top:0!important;
+  }
+
+  .review-placeholder-avatar{
+    display:grid!important;
+    place-items:center;
+    background:#f8dde4!important;
+    color:#ff4b78;
+    font-size:24px;
+  }
+
+  @media(max-width:1080px){
+    #reviews .reviews-info-layout{
+      grid-template-columns:1fr;
+      grid-template-areas:
+        "head-left"
+        "content-left"
+        "head-right"
+        "content-right";
+      row-gap:22px;
+    }
+    #reviews .reviews-info-head{min-height:0;}
+  }
+
+  @media(max-width:720px){
+    #reviews .reviews-grid{
+      grid-template-columns:1fr!important;
+    }
+    #reviews .reviews-head-left .section-title,
+    #reviews .reviews-head-right .info-title{
+      font-size:56px;
+    }
+  }
+</style>
+<style id="byme-v23-reviews-compact">
+  /* Compact reviews: 4 narrow vertical cards in one row, same visual height as INFO */
+  #reviews .reviews-info-layout{
+    grid-template-columns:minmax(0, 1.9fr) minmax(330px, .8fr)!important;
+    column-gap:34px!important;
+    row-gap:22px!important;
+  }
+
+  #reviews .reviews-grid{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:12px!important;
+    align-items:stretch!important;
+  }
+
+  #reviews .review-card{
+    min-height:0!important;
+    height:100%!important;
+    padding:18px 16px 18px!important;
+    border-radius:22px!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+
+  #reviews .avatar{
+    width:42px!important;
+    height:42px!important;
+    margin-bottom:11px!important;
+    flex:0 0 auto!important;
+  }
+
+  #reviews .stars{
+    font-size:14px!important;
+    letter-spacing:.5px!important;
+    margin-bottom:8px!important;
+  }
+
+  #reviews .review-name{
+    font-size:15px!important;
+    line-height:1.15!important;
+    margin-bottom:9px!important;
+  }
+
+  #reviews .review-card p{
+    font-size:14px!important;
+    line-height:1.32!important;
+    margin:0!important;
+  }
+
+  #reviews .reviews-content-left,
+  #reviews .reviews-content-right{
+    min-height:0!important;
+  }
+
+  #reviews .reviews-content-right .info-item{
+    padding:18px 0!important;
+    font-size:17px!important;
+    line-height:1.25!important;
+  }
+
+  #reviews .reviews-content-right .info-list{
+    min-height:100%!important;
+  }
+
+  /* Keep reviews visually from dropping below FAQ */
+  @media(min-width:1081px){
+    #reviews .reviews-grid{
+      height:100%!important;
+    }
+    #reviews .review-card{
+      max-height:250px!important;
+      overflow:hidden!important;
+    }
+  }
+
+  @media(max-width:1320px) and (min-width:1081px){
+    #reviews .review-card{
+      padding:16px 13px!important;
+    }
+    #reviews .review-card p{
+      font-size:13px!important;
+    }
+    #reviews .review-name{
+      font-size:14px!important;
+    }
+  }
+
+  @media(max-width:1080px){
+    #reviews .reviews-grid{
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    }
+    #reviews .review-card{
+      max-height:none!important;
+    }
+  }
+
+  @media(max-width:720px){
+    #reviews .reviews-grid{
+      grid-template-columns:1fr!important;
+    }
+  }
+</style>
+<style id="byme-v25-unified-style">
+  /* =========================================================
+     BYME TYPOGRAPHY SYSTEM
+     1) Inter - all functional/body text
+     2) Cormorant Garamond - only large editorial headings
+     3) Caveat - only handwritten accents
+     ========================================================= */
+
+  body,
+  button,
+  input,
+  textarea,
+  select,
+  .menu,
+  .section-kicker,
+  .section-link,
+  .category-label,
+  .product h3,
+  .price,
+  .review-name,
+  .review-card p,
+  .stars,
+  .info-item,
+  .footer-title,
+  .footer-col,
+  .promo-drop-word,
+  .promo-small-copy,
+  .promo-sale-percent,
+  .promo-sale-title,
+  .promo-main-btn,
+  .drop-label,
+  .drop-copy,
+  .drop-action-btn,
+  .online-kicker,
+  .online-copy {
+    font-family:'Inter', system-ui, sans-serif !important;
+  }
+
+  /* Large editorial headings */
+  .hero-title,
+  .section-title,
+  .info-title,
+  .online-title,
+  .newsletter-title,
+  #reviews .reviews-head-left .section-title,
+  #reviews .reviews-head-right .info-title {
+    font-family:'Cormorant Garamond', Georgia, serif !important;
+    font-weight:700 !important;
+    letter-spacing:-.04em;
+  }
+
+  /* Brand / large graphic lettering stays geometric sans */
+  .brand,
+  .hero-ghost,
+  .footer-brand,
+  .promo-brand-line strong,
+  .drop-mini-brand {
+    font-family:'Inter', system-ui, sans-serif !important;
+    font-weight:800;
+  }
+
+  /* Handwritten accent only */
+  .hero-script,
+  .promo-coming,
+  .drop-script {
+    font-family:'Caveat', cursive !important;
+    font-weight:700;
+  }
+
+  /* =========================================================
+     ONE CTA BUTTON LANGUAGE
+     rounded pill / 58px / bold Inter / subtle lift
+     ========================================================= */
+  .hero-cta,
+  .online-cta,
+  .newsletter-btn,
+  .buy-btn,
+  .promo-main-btn,
+  .drop-action-btn,
+  .quick-pop .quick-btn {
+    min-height:58px !important;
+    height:58px !important;
+    border-radius:999px !important;
+    padding:0 28px !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:12px !important;
+    font-family:'Inter', system-ui, sans-serif !important;
+    font-size:16px !important;
+    line-height:1 !important;
+    font-weight:800 !important;
+    letter-spacing:0 !important;
+    text-transform:none;
+    cursor:pointer;
+    transition:
+      transform .18s ease,
+      box-shadow .18s ease,
+      background .18s ease,
+      color .18s ease,
+      border-color .18s ease !important;
+  }
+
+  .hero-cta:hover,
+  .online-cta:hover,
+  .newsletter-btn:hover,
+  .buy-btn:hover,
+  .promo-main-btn:hover,
+  .drop-action-btn:hover,
+  .quick-pop .quick-btn:hover {
+    transform:translateY(-2px) !important;
+    box-shadow:0 10px 24px rgba(0,0,0,.14) !important;
+  }
+
+  .hero-cta:active,
+  .online-cta:active,
+  .newsletter-btn:active,
+  .buy-btn:active,
+  .promo-main-btn:active,
+  .drop-action-btn:active,
+  .quick-pop .quick-btn:active {
+    transform:translateY(0) scale(.98) !important;
+  }
+
+  /* Primary pink CTAs */
+  .hero-cta,
+  .online-cta,
+  .newsletter-btn {
+    background:var(--pink) !important;
+    color:#fff !important;
+    border:1.5px solid var(--pink) !important;
+  }
+
+  /* Product buttons: white default, black hover */
+  .buy-btn {
+    width:100% !important;
+    background:#fff !important;
+    color:#111 !important;
+    border:1.5px solid #111 !important;
+  }
+  .buy-btn:hover {
+    background:#111 !important;
+    color:#fff !important;
+  }
+
+  /* Promo buttons keep their contrast colors but same shape */
+  .promo-main-btn,
+  .drop-action-btn {
+    min-width:0 !important;
+    width:auto;
+  }
+  .promo-main-btn-dark,
+  .drop-action-btn:not(.drop-action-light) {
+    background:#111 !important;
+    color:#fff !important;
+    border:1.5px solid #111 !important;
+  }
+  .promo-main-btn-light,
+  .drop-action-light {
+    background:#fff !important;
+    color:#111 !important;
+    border:1.5px solid #fff !important;
+  }
+
+  /* Arrow inside promo button: same baseline, not oversized */
+  .promo-main-btn span {
+    font-size:22px !important;
+    line-height:1 !important;
+    font-weight:500 !important;
+  }
+
+  /* Header utility icons are a separate icon-button system */
+  .icon-btn {
+    border-radius:999px !important;
+    transition:transform .18s ease, background .18s ease, box-shadow .18s ease !important;
+  }
+
+  /* Consistent small labels */
+  .section-kicker,
+  .online-kicker {
+    font-size:12px !important;
+    line-height:1.2 !important;
+    letter-spacing:.18em !important;
+    font-weight:800 !important;
+    text-transform:uppercase;
+  }
+
+  @media(max-width:720px){
+    .hero-cta,
+    .online-cta,
+    .newsletter-btn,
+    .buy-btn,
+    .promo-main-btn,
+    .drop-action-btn,
+    .quick-pop .quick-btn {
+      min-height:52px !important;
+      height:52px !important;
+      padding:0 22px !important;
+      font-size:15px !important;
+    }
+  }
+</style>
+<style id="byme-v26-avatar-fix">
+  #reviews .avatar{
+    overflow:hidden !important;
+    background:#ececec !important;
+  }
+  #reviews .avatar img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center top !important;
+    display:block !important;
+  }
+</style>
+<style id="byme-v27-promo-photo-position">
+#drop-sale .promo-drop .promo-photo{
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+#drop-sale .promo-sale .promo-photo{
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+</style><style id="byme-v28-drop-photo-fit">
+#drop-sale .promo-drop .promo-photo{
+  object-fit:cover !important;
+  object-position:center 18% !important;
+}
+</style>
+<style id="byme-v30-catalog-hover-reveal">
+  /* Catalog Hover Reveal
+     Important: does NOT change existing images, text, card dimensions or grid sizes. */
+
+  #catalog .category-card{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    transition:
+      transform .38s cubic-bezier(.2,.75,.25,1),
+      box-shadow .38s ease;
+  }
+
+  #catalog .category-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:scale(1);
+    transition:
+      transform .65s cubic-bezier(.2,.75,.25,1),
+      filter .45s ease;
+    will-change:transform;
+  }
+
+  /* Keep the existing gradient, but make it animate on hover */
+  #catalog .category-card::after{
+    z-index:1;
+    opacity:.86;
+    transition:opacity .42s ease, background .42s ease;
+  }
+
+  /* Additional reveal layer */
+  #catalog .category-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+      linear-gradient(
+        to top,
+        rgba(0,0,0,.32) 0%,
+        rgba(0,0,0,.04) 48%,
+        rgba(255,255,255,.08) 100%
+      );
+    opacity:0;
+    transform:translateY(12%);
+    transition:
+      opacity .42s ease,
+      transform .55s cubic-bezier(.2,.75,.25,1);
+  }
+
+  #catalog .category-label{
+    z-index:3;
+    transform:translateY(0);
+    transition:
+      transform .42s cubic-bezier(.2,.75,.25,1),
+      letter-spacing .42s ease;
+    will-change:transform;
+  }
+
+  /* Small visual line reveal only, no new copy */
+  #catalog .category-label::after{
+    content:"";
+    display:block;
+    width:0;
+    height:2px;
+    margin-top:10px;
+    background:currentColor;
+    opacity:.95;
+    transition:width .42s cubic-bezier(.2,.75,.25,1);
+  }
+
+  @media (hover:hover) and (pointer:fine){
+    #catalog .category-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 22px 46px rgba(0,0,0,.12);
+    }
+
+    #catalog .category-card:hover img{
+      transform:scale(1.075);
+      filter:saturate(1.06) contrast(1.03);
+    }
+
+    #catalog .category-card:hover::after{
+      opacity:1;
+      background:linear-gradient(
+        to top,
+        rgba(0,0,0,.74) 0%,
+        rgba(0,0,0,.20) 48%,
+        rgba(0,0,0,.02) 78%
+      );
+    }
+
+    #catalog .category-card:hover::before{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    #catalog .category-card:hover .category-label{
+      transform:translateY(-12px);
+      letter-spacing:-.015em;
+    }
+
+    #catalog .category-card:hover .category-label::after{
+      width:48px;
+    }
+  }
+
+  /* Keyboard users get the same reveal */
+  #catalog .category-card:focus-within{
+    transform:translateY(-6px);
+    box-shadow:0 22px 46px rgba(0,0,0,.12);
+  }
+
+  #catalog .category-card:focus-within img{
+    transform:scale(1.075);
+  }
+
+  #catalog .category-card:focus-within .category-label{
+    transform:translateY(-12px);
+  }
+
+  #catalog .category-card:focus-within .category-label::after{
+    width:48px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #catalog .category-card,
+    #catalog .category-card img,
+    #catalog .category-card::before,
+    #catalog .category-card::after,
+    #catalog .category-label,
+    #catalog .category-label::after{
+      transition:none !important;
+    }
+  }
+</style>
+<style id="byme-v31-hover-hits-drop-sale">
+  /* Same hover language as Catalog, applied to Hits */
+  #hits .product{
+    position:relative;
+    isolation:isolate;
+    transition:
+      transform .38s cubic-bezier(.2,.75,.25,1),
+      box-shadow .38s ease;
+  }
+
+  #hits .product-visual{
+    position:relative;
+    overflow:hidden;
+  }
+
+  #hits .product-visual::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(
+      to top,
+      rgba(0,0,0,.18) 0%,
+      rgba(0,0,0,.02) 48%,
+      rgba(255,255,255,.06) 100%
+    );
+    opacity:0;
+    transform:translateY(12%);
+    transition:
+      opacity .42s ease,
+      transform .55s cubic-bezier(.2,.75,.25,1);
+  }
+
+  #hits .product-visual img{
+    transform:scale(1);
+    transition:
+      transform .65s cubic-bezier(.2,.75,.25,1),
+      filter .45s ease;
+    will-change:transform;
+  }
+
+  #hits .product h3{
+    transition:
+      transform .42s cubic-bezier(.2,.75,.25,1),
+      letter-spacing .42s ease;
+  }
+
+  @media (hover:hover) and (pointer:fine){
+    #hits .product:hover{
+      transform:translateY(-6px);
+      box-shadow:0 22px 46px rgba(0,0,0,.12);
+    }
+
+    #hits .product:hover .product-visual img{
+      transform:scale(1.075);
+      filter:saturate(1.06) contrast(1.03);
+    }
+
+    #hits .product:hover .product-visual::after{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    #hits .product:hover h3{
+      transform:translateY(-3px);
+    }
+  }
+
+  /* Same hover language for Drop + Sale promo cards */
+  #drop-sale .promo-card{
+    transition:
+      transform .38s cubic-bezier(.2,.75,.25,1),
+      box-shadow .38s ease;
+  }
+
+  #drop-sale .promo-photo-col{
+    position:relative;
+    overflow:hidden;
+  }
+
+  #drop-sale .promo-photo-col::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(
+      to top,
+      rgba(0,0,0,.15) 0%,
+      rgba(0,0,0,.02) 52%,
+      rgba(255,255,255,.05) 100%
+    );
+    opacity:0;
+    transform:translateY(12%);
+    transition:
+      opacity .42s ease,
+      transform .55s cubic-bezier(.2,.75,.25,1);
+  }
+
+  #drop-sale .promo-photo{
+    transform:scale(1);
+    transition:
+      transform .65s cubic-bezier(.2,.75,.25,1),
+      filter .45s ease;
+    will-change:transform;
+  }
+
+  #drop-sale .promo-copy-col{
+    transition:transform .42s cubic-bezier(.2,.75,.25,1);
+  }
+
+  @media (hover:hover) and (pointer:fine){
+    #drop-sale .promo-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 22px 46px rgba(0,0,0,.14);
+    }
+
+    #drop-sale .promo-card:hover .promo-photo{
+      transform:scale(1.075);
+      filter:saturate(1.06) contrast(1.03);
+    }
+
+    #drop-sale .promo-card:hover .promo-photo-col::after{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    #drop-sale .promo-card:hover .promo-copy-col{
+      transform:translateY(-4px);
+    }
+  }
+
+  #hits .product:focus-within,
+  #drop-sale .promo-card:focus-within{
+    transform:translateY(-6px);
+    box-shadow:0 22px 46px rgba(0,0,0,.12);
+  }
+
+  #hits .product:focus-within .product-visual img,
+  #drop-sale .promo-card:focus-within .promo-photo{
+    transform:scale(1.075);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #hits .product,
+    #hits .product-visual img,
+    #hits .product-visual::after,
+    #hits .product h3,
+    #drop-sale .promo-card,
+    #drop-sale .promo-photo,
+    #drop-sale .promo-photo-col::after,
+    #drop-sale .promo-copy-col{
+      transition:none !important;
+    }
+  }
+</style>
+<style id="byme-v32-footer-links">
+  footer .footer-col a,
+  footer .footer-socials a{
+    position:relative;
+    display:inline-block;
+    width:max-content;
+    max-width:100%;
+    color:#272727;
+    text-decoration:none;
+    cursor:pointer;
+  }
+
+  footer .footer-col a::after,
+  footer .footer-socials a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:2px;
+    height:1.5px;
+    background:currentColor;
+    transform:scaleX(0);
+    transform-origin:left center;
+    transition:transform .22s ease;
+  }
+
+  footer .footer-col a:hover::after,
+  footer .footer-col a:focus-visible::after,
+  footer .footer-socials a:hover::after,
+  footer .footer-socials a:focus-visible::after{
+    transform:scaleX(1);
+  }
+
+  footer .footer-socials{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:0;
+    margin-top:2px;
+    font-size:18px;
+    line-height:1.55;
+    color:#272727;
+  }
+
+  footer .footer-socials span{
+    display:inline-block;
+    margin:0 4px;
+    color:#777;
+  }
+
+  footer .footer-col a:focus-visible,
+  footer .footer-socials a:focus-visible{
+    outline:2px solid var(--pink);
+    outline-offset:3px;
+    border-radius:3px;
+  }
+</style>
+<style id="byme-v33-info-hover">
+  /* INFO interaction: clearly clickable without changing layout/text */
+  #reviews .info-item{
+    position:relative;
+    cursor:pointer;
+    transition:
+      transform .22s ease,
+      padding-left .22s ease,
+      padding-right .22s ease,
+      background .22s ease,
+      color .22s ease,
+      border-color .22s ease;
+  }
+
+  #reviews .info-item::before{
+    content:"";
+    position:absolute;
+    inset:5px -12px;
+    border-radius:14px;
+    background:rgba(255,75,120,.08);
+    opacity:0;
+    transform:scale(.98);
+    transition:opacity .22s ease, transform .22s ease;
+    z-index:-1;
+  }
+
+  #reviews .info-item span{
+    transition:transform .22s ease;
+  }
+
+  #reviews .info-item::after{
+    transition:transform .22s ease, color .22s ease;
+    transform-origin:center;
+  }
+
+  @media (hover:hover) and (pointer:fine){
+    #reviews .info-item:hover{
+      transform:translateX(4px);
+      padding-left:8px !important;
+      padding-right:8px !important;
+      color:#111;
+      border-color:rgba(255,75,120,.35);
+    }
+
+    #reviews .info-item:hover::before{
+      opacity:1;
+      transform:scale(1);
+    }
+
+    #reviews .info-item:hover span{
+      transform:translateX(2px);
+    }
+
+    #reviews .info-item:hover::after{
+      transform:translateX(5px);
+      color:var(--pink);
+    }
+  }
+
+  #reviews .info-item:focus-visible{
+    outline:2px solid var(--pink);
+    outline-offset:4px;
+    border-radius:10px;
+  }
+
+  #reviews .info-item:active{
+    transform:translateX(2px) scale(.995);
+  }
+</style>
+<style id="byme-v34-button-hover-footer-fix">
+  /* --- Footer Catalog: vertical list again --- */
+  footer .footer-catalog-col{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:flex-start !important;
+    gap:0 !important;
+  }
+
+  footer .footer-catalog-col .footer-title{
+    display:block !important;
+    width:100% !important;
+  }
+
+  footer .footer-catalog-col > a,
+  footer .footer-catalog-col > p{
+    display:block !important;
+    width:max-content !important;
+    max-width:100% !important;
+    margin:0 !important;
+  }
+
+  /* --- Unified animated hover for every oval CTA --- */
+  :where(
+    .hero-btn,
+    .buy,
+    .online-btn,
+    .newsletter-btn,
+    .promo-main-btn,
+    .btn,
+    .cta,
+    .pill-btn,
+    .product button,
+    #hits button,
+    #drop-sale button,
+    #catalog a[class*="btn"],
+    #online a[class*="btn"],
+    #newsletter button
+  ){
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+    transition:
+      transform .22s ease,
+      box-shadow .22s ease,
+      color .26s ease,
+      background-color .26s ease,
+      border-color .26s ease !important;
+  }
+
+  :where(
+    .hero-btn,
+    .buy,
+    .online-btn,
+    .newsletter-btn,
+    .promo-main-btn,
+    .btn,
+    .cta,
+    .pill-btn,
+    .product button,
+    #hits button,
+    #drop-sale button,
+    #catalog a[class*="btn"],
+    #online a[class*="btn"],
+    #newsletter button
+  )::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    border-radius:inherit;
+    background:#111;
+    transform:translateY(102%);
+    transition:transform .28s cubic-bezier(.2,.75,.25,1);
+  }
+
+  @media (hover:hover) and (pointer:fine){
+    :where(
+      .hero-btn,
+      .buy,
+      .online-btn,
+      .newsletter-btn,
+      .promo-main-btn,
+      .btn,
+      .cta,
+      .pill-btn,
+      .product button,
+      #hits button,
+      #drop-sale button,
+      #catalog a[class*="btn"],
+      #online a[class*="btn"],
+      #newsletter button
+    ):hover{
+      transform:translateY(-3px);
+      box-shadow:0 12px 24px rgba(0,0,0,.16);
+      color:#fff !important;
+      border-color:#111 !important;
+    }
+
+    :where(
+      .hero-btn,
+      .buy,
+      .online-btn,
+      .newsletter-btn,
+      .promo-main-btn,
+      .btn,
+      .cta,
+      .pill-btn,
+      .product button,
+      #hits button,
+      #drop-sale button,
+      #catalog a[class*="btn"],
+      #online a[class*="btn"],
+      #newsletter button
+    ):hover::before{
+      transform:translateY(0);
+    }
+
+    /* Buttons that are black by default invert to pink on hover,
+       matching the lively color-switch behavior from Hits. */
+    :where(
+      .buy,
+      .promo-main-btn
+    ){
+      --byme-dark-hover:#ff4b78;
+    }
+
+    :where(
+      .buy,
+      .promo-main-btn
+    )::before{
+      background:var(--byme-dark-hover, #ff4b78);
+    }
+
+    :where(
+      .buy,
+      .promo-main-btn
+    ):hover{
+      border-color:var(--byme-dark-hover, #ff4b78) !important;
+    }
+  }
+
+  :where(
+    .hero-btn,
+    .buy,
+    .online-btn,
+    .newsletter-btn,
+    .promo-main-btn,
+    .btn,
+    .cta,
+    .pill-btn,
+    .product button,
+    #hits button,
+    #drop-sale button,
+    #catalog a[class*="btn"],
+    #online a[class*="btn"],
+    #newsletter button
+  ):active{
+    transform:translateY(-1px) scale(.985);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    :where(
+      .hero-btn,
+      .buy,
+      .online-btn,
+      .newsletter-btn,
+      .promo-main-btn,
+      .btn,
+      .cta,
+      .pill-btn,
+      .product button,
+      #hits button,
+      #drop-sale button,
+      #catalog a[class*="btn"],
+      #online a[class*="btn"],
+      #newsletter button
+    ),
+    :where(
+      .hero-btn,
+      .buy,
+      .online-btn,
+      .newsletter-btn,
+      .promo-main-btn,
+      .btn,
+      .cta,
+      .pill-btn,
+      .product button,
+      #hits button,
+      #drop-sale button,
+      #catalog a[class*="btn"],
+      #online a[class*="btn"],
+      #newsletter button
+    )::before{
+      transition:none !important;
+    }
+  }
+</style>
+<style id="byme-v35-specific-button-colors">
+  /* Override previous generic button hover behavior with section-specific colors */
+
+  /* SALE: white -> black */
+  #drop-sale .promo-sale .promo-main-btn{
+    background:#fff !important;
+    color:#111 !important;
+    border-color:#fff !important;
+  }
+  #drop-sale .promo-sale .promo-main-btn::before{
+    background:#111 !important;
+  }
+  #drop-sale .promo-sale .promo-main-btn:hover{
+    color:#fff !important;
+    border-color:#111 !important;
+  }
+
+  /* DROP: black -> white */
+  #drop-sale .promo-drop .promo-main-btn{
+    background:#111 !important;
+    color:#fff !important;
+    border-color:#111 !important;
+  }
+  #drop-sale .promo-drop .promo-main-btn::before{
+    background:#fff !important;
+  }
+  #drop-sale .promo-drop .promo-main-btn:hover{
+    color:#111 !important;
+    border-color:#fff !important;
+  }
+
+  /* ONLINE CAPSULE: text uppercase and hover to white */
+  .online-btn{
+    text-transform:uppercase !important;
+  }
+  .online-btn::before{
+    background:#fff !important;
+  }
+  .online-btn:hover{
+    color:#111 !important;
+    border-color:#fff !important;
+  }
+
+  /* NEWSLETTER: text uppercase and hover to white */
+  .newsletter-btn{
+    text-transform:uppercase !important;
+  }
+  .newsletter-btn::before{
+    background:#fff !important;
+  }
+  .newsletter-btn:hover{
+    color:#111 !important;
+    border-color:#fff !important;
+  }
+</style>
+<style id="byme-v36-online-cta-fix">
+  .online-cta{
+    text-transform:uppercase !important;
+    position:relative !important;
+    overflow:hidden !important;
+    isolation:isolate !important;
+    transition:
+      transform .22s ease,
+      box-shadow .22s ease,
+      color .26s ease,
+      background-color .26s ease,
+      border-color .26s ease !important;
+  }
+
+  .online-cta::before{
+    content:"" !important;
+    position:absolute !important;
+    inset:0 !important;
+    z-index:-1 !important;
+    border-radius:inherit !important;
+    background:#fff !important;
+    transform:translateY(102%) !important;
+    transition:transform .28s cubic-bezier(.2,.75,.25,1) !important;
+  }
+
+  @media (hover:hover) and (pointer:fine){
+    .online-cta:hover{
+      color:#111 !important;
+      border-color:#fff !important;
+      transform:translateY(-3px) !important;
+      box-shadow:0 12px 24px rgba(0,0,0,.16) !important;
+    }
+
+    .online-cta:hover::before{
+      transform:translateY(0) !important;
+    }
+  }
+
+  .online-cta:active{
+    transform:translateY(-1px) scale(.985) !important;
+  }
+</style>
+<style id="byme-v37-text-link-hover-scale">
+  .byme-hover-scale-link{
+    display:inline-block !important;
+    transform-origin:left center;
+    transition:
+      transform .22s cubic-bezier(.2,.75,.25,1),
+      letter-spacing .22s ease !important;
+    will-change:transform;
+  }
+
+  @media (hover:hover) and (pointer:fine){
+    .byme-hover-scale-link:hover{
+      transform:scale(1.08);
+      letter-spacing:.01em;
+    }
+  }
+
+  .byme-hover-scale-link:active{
+    transform:scale(1.03);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .byme-hover-scale-link{
+      transition:none !important;
+    }
+  }
+</style>
+<style id="byme-v38-info-anchor">
+  html{ scroll-behavior:smooth; }
+  #info{ scroll-margin-top:110px; }
+</style>
+<style id="byme-v39-info-scroll">
+  html{scroll-behavior:smooth;}
+  #info-section{
+    position:relative;
+    top:-120px;
+    width:1px;
+    height:1px;
+    pointer-events:none;
+  }
+</style>
+<style id="byme-v40-footer-buyers-list-fix">
+  /* Покупателям: строго вертикальный список */
+  footer .footer-buyers-col{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:flex-start !important;
+    gap:0 !important;
+  }
+
+  footer .footer-buyers-col .footer-title{
+    display:block !important;
+    width:100% !important;
+  }
+
+  footer .footer-buyers-col > a,
+  footer .footer-buyers-col > p{
+    display:block !important;
+    width:max-content !important;
+    max-width:100% !important;
+    margin:0 !important;
+  }
+</style>
+<style id="byme-v45-mobile-clean">
+/* Public view: editor UI must never cover the storefront. */
+.byme-editor-v19,
+.byme-editor-v25,
+.byme-editor,
+[class*="byme-editor"],
+#v25Editor,
+#v19Editor,
+#v25Handle,
+#v19Handle,
+.v19-move-handle,
+.v19-toast,
+.ed-inspector{
+  display:none !important;
+}
+
+/* ---------------------------------------------------------
+   PHONES PORTRAIT: <=575px
+   Reference target: 360px Android / 375px iPhone.
+   --------------------------------------------------------- */
+@media (max-width:575px){
+
+  html,body{overflow-x:hidden !important;}
+  body{font-size:16px !important;}
+  .shell{
+    width:calc(100% - 16px) !important;
+    max-width:100% !important;
+  }
+
+  /* HEADER: one compact row, exactly like the PDF:
+     tiny text menu left, pink icon zone right. */
+  .site-header{
+    position:sticky !important;
+    top:0 !important;
+    z-index:60 !important;
+    background:#f5f5f2 !important;
+  }
+  .header-row{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    align-items:stretch !important;
+    min-height:44px !important;
+    gap:0 !important;
+  }
+  .brand{
+    display:none !important;
+  }
+  .menu{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:10px !important;
+    padding:0 7px !important;
+    min-width:0 !important;
+    overflow-x:auto !important;
+    white-space:nowrap !important;
+    scrollbar-width:none !important;
+    font-size:8px !important;
+    font-weight:700 !important;
+    line-height:1 !important;
+  }
+  .menu::-webkit-scrollbar{display:none !important;}
+  .menu a{
+    flex:0 0 auto !important;
+    padding:16px 0 14px !important;
+  }
+  .menu a::after{
+    bottom:8px !important;
+    height:1px !important;
+  }
+  .toolbar-wrap{
+    height:44px !important;
+    padding:0 7px !important;
+    background:var(--soft-pink) !important;
+  }
+  .toolbar{
+    gap:7px !important;
+  }
+  .icon-btn{
+    width:21px !important;
+    height:21px !important;
+  }
+  .badge{
+    min-width:14px !important;
+    height:14px !important;
+    padding:0 3px !important;
+    font-size:8px !important;
+    right:-5px !important;
+    top:-6px !important;
+  }
+
+  /* HERO: rebuilt to match page 1 of the PDF. */
+  .hero{
+    padding-top:0 !important;
+  }
+  .hero-stage{
+    position:relative !important;
+    height:410px !important;
+    min-height:410px !important;
+    overflow:hidden !important;
+    background:linear-gradient(90deg,#f7f7f5 0 74%,#f4e6ea 100%) !important;
+    border:0 !important;
+  }
+  .hero-ghost{
+    position:absolute !important;
+    inset:auto !important;
+    left:12px !important;
+    top:6px !important;
+    width:auto !important;
+    height:auto !important;
+    transform:none !important;
+    font-size:29vw !important;
+    line-height:.82 !important;
+    letter-spacing:-.085em !important;
+    white-space:nowrap !important;
+    z-index:1 !important;
+  }
+  .hero-script{
+    position:absolute !important;
+    inset:auto !important;
+    left:14px !important;
+    top:70px !important;
+    width:auto !important;
+    height:auto !important;
+    transform:rotate(-6deg) !important;
+    font-size:37px !important;
+    line-height:.86 !important;
+    white-space:nowrap !important;
+    z-index:4 !important;
+  }
+  .hero-model{
+    position:absolute !important;
+    inset:auto !important;
+    right:-2px !important;
+    top:22px !important;
+    bottom:auto !important;
+    width:58vw !important;
+    max-width:220px !important;
+    height:auto !important;
+    transform:none !important;
+    z-index:3 !important;
+  }
+  .hero-copy{
+    position:absolute !important;
+    inset:auto !important;
+    left:14px !important;
+    top:190px !important;
+    width:58% !important;
+    max-width:220px !important;
+    height:auto !important;
+    transform:none !important;
+    z-index:5 !important;
+  }
+  .hero-title{
+    margin:0 !important;
+    width:auto !important;
+    height:auto !important;
+    max-width:210px !important;
+    font-size:30px !important;
+    line-height:.87 !important;
+    letter-spacing:-.04em !important;
+  }
+  .hero-text{
+    margin:9px 0 0 !important;
+    width:auto !important;
+    height:auto !important;
+    max-width:210px !important;
+    font-size:16px !important;
+    line-height:1.2 !important;
+  }
+  .hero-cta{
+    margin-top:11px !important;
+    min-height:44px !important;
+    height:44px !important;
+    padding:0 14px !important;
+    font-size:10px !important;
+    white-space:nowrap !important;
+  }
+
+  /* GENERAL SECTION TITLES */
+  .section{
+    padding:24px 0 30px !important;
+  }
+  .section-head{
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:flex-end !important;
+    justify-content:space-between !important;
+    gap:8px !important;
+    margin-bottom:11px !important;
+  }
+  .section-kicker{
+    font-size:7px !important;
+    line-height:1.1 !important;
+    margin-bottom:3px !important;
+  }
+  .section-title{
+    font-size:38px !important;
+    line-height:.87 !important;
+  }
+  .section-link{
+    font-size:10px !important;
+    padding-bottom:3px !important;
+    border-bottom-width:1px !important;
+  }
+
+  /* CATALOG: 2 x 2 */
+  .catalog-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+  .category-card{
+    min-height:188px !important;
+    border-radius:15px !important;
+  }
+  .category-label{
+    left:10px !important;
+    bottom:9px !important;
+    font-size:15px !important;
+    line-height:.92 !important;
+  }
+
+  /* HITS: 2 x 2 */
+  .products-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+  .product{
+    padding:6px 6px 9px !important;
+    border-radius:15px !important;
+  }
+  .product-visual{
+    border-radius:11px !important;
+  }
+  .product-fav{
+    width:28px !important;
+    height:28px !important;
+    right:6px !important;
+    top:6px !important;
+  }
+  .product-fav svg{
+    width:15px !important;
+    height:15px !important;
+  }
+  .product h3{
+    margin:7px 0 3px !important;
+    font-size:11px !important;
+    line-height:1.15 !important;
+  }
+  .price{
+    margin-bottom:6px !important;
+    font-size:15px !important;
+  }
+  .buy-btn{
+    min-height:44px !important;
+    height:44px !important;
+    padding:0 8px !important;
+    font-size:11px !important;
+  }
+
+  /* DROP / SALE: true horizontal 55/45 cards like PDF pages 3-4. */
+  .promo-brand-line{
+    margin:0 8px 11px !important;
+    gap:9px !important;
+  }
+  .promo-brand-line strong{
+    font-size:21px !important;
+    letter-spacing:.18em !important;
+  }
+  .promo-two-cards{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+  .promo-card{
+    height:205px !important;
+    min-height:0 !important;
+    display:grid !important;
+    grid-template-columns:55% 45% !important;
+    border-radius:15px !important;
+  }
+  .promo-copy-col{
+    position:relative !important;
+    z-index:3 !important;
+    width:auto !important;
+    height:100% !important;
+    padding:18px 8px 14px 17px !important;
+  }
+  .promo-photo-col{
+    position:relative !important;
+    inset:auto !important;
+    width:auto !important;
+    height:100% !important;
+    opacity:1 !important;
+    z-index:2 !important;
+  }
+  .promo-photo{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+  }
+  .promo-drop-word{
+    font-size:39px !important;
+    line-height:.82 !important;
+  }
+  .promo-coming{
+    margin:0 0 14px 1px !important;
+    font-size:29px !important;
+  }
+  .promo-small-copy{
+    font-size:10.5px !important;
+    line-height:1.15 !important;
+  }
+  .promo-sale-percent{
+    margin-top:0 !important;
+    font-size:48px !important;
+    line-height:.8 !important;
+  }
+  .promo-sale-title{
+    margin:7px 0 9px !important;
+    font-size:16px !important;
+  }
+  .promo-main-btn{
+    min-height:44px !important;
+    height:44px !important;
+    padding:0 12px !important;
+    font-size:9.5px !important;
+  }
+  .promo-main-btn span{
+    font-size:14px !important;
+  }
+
+  /* ONLINE: compact two-column black strip, not a tall card. */
+  .online-box{
+    padding:15px 16px !important;
+    border-radius:15px !important;
+    display:grid !important;
+    grid-template-columns:.92fr 1.08fr !important;
+    gap:10px !important;
+    align-items:center !important;
+  }
+  .online-kicker{
+    margin-bottom:6px !important;
+    font-size:6px !important;
+  }
+  .online-title{
+    font-size:36px !important;
+    line-height:.82 !important;
+  }
+  .online-copy{
+    width:auto !important;
+    height:auto !important;
+    margin:0 !important;
+    max-width:100% !important;
+    font-size:10.5px !important;
+    line-height:1.2 !important;
+  }
+  .online-cta{
+    margin-top:9px !important;
+    min-height:44px !important;
+    height:44px !important;
+    padding:0 9px !important;
+    font-size:7.5px !important;
+    white-space:nowrap !important;
+  }
+
+  /* REVIEWS then INFO, full-width stacked sections.
+     Reviews = 4 small cards in ONE row, as in the PDF. */
+  #reviews .reviews-info-layout{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    grid-template-areas:
+      "head-left"
+      "content-left"
+      "head-right"
+      "content-right" !important;
+    column-gap:0 !important;
+    row-gap:6px !important;
+  }
+  #reviews .reviews-info-head{
+    min-height:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:flex-end !important;
+  }
+  #reviews .reviews-head-left .section-title,
+  #reviews .reviews-head-right .info-title{
+    margin:0 !important;
+    font-size:39px !important;
+    line-height:.86 !important;
+  }
+  #reviews .reviews-content-left{
+    margin-bottom:10px !important;
+  }
+  #reviews .reviews-grid{
+    display:grid !important;
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    gap:5px !important;
+    margin-top:5px !important;
+  }
+  #reviews .review-card{
+    min-width:0 !important;
+    min-height:106px !important;
+    height:106px !important;
+    padding:7px 6px !important;
+    border-radius:10px !important;
+    overflow:hidden !important;
+  }
+  #reviews .avatar{
+    width:19px !important;
+    height:19px !important;
+    margin-bottom:3px !important;
+  }
+  #reviews .stars{
+    width:auto !important;
+    height:auto !important;
+    margin-bottom:2px !important;
+    font-size:6.5px !important;
+    letter-spacing:0 !important;
+    white-space:nowrap !important;
+  }
+  #reviews .review-name{
+    margin-bottom:2px !important;
+    font-size:6.5px !important;
+    line-height:1.05 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+  #reviews .review-card p{
+    margin:0 !important;
+    font-size:6.3px !important;
+    line-height:1.15 !important;
+  }
+  #reviews .reviews-content-right .info-list{
+    margin:0 !important;
+  }
+  #reviews .reviews-content-right .info-item{
+    min-height:44px !important;
+    padding:11px 0 !important;
+    font-size:11px !important;
+    line-height:1.15 !important;
+  }
+
+  /* NEWSLETTER: one compact horizontal black strip. */
+  .newsletter{
+    margin-top:10px !important;
+    padding:10px !important;
+    border-radius:13px !important;
+    display:grid !important;
+    grid-template-columns:1.08fr .92fr auto !important;
+    gap:6px !important;
+    align-items:center !important;
+  }
+  .newsletter-title{
+    font-size:19px !important;
+    line-height:.88 !important;
+  }
+  .newsletter-input{
+    min-height:44px !important;
+    height:44px !important;
+    padding:0 10px !important;
+    font-size:10px !important;
+  }
+  .newsletter-btn{
+    min-height:44px !important;
+    height:44px !important;
+    padding:0 10px !important;
+    font-size:8px !important;
+  }
+
+  /* FOOTER: compact 4-column layout from PDF page 5. */
+  footer{
+    padding:10px 0 24px !important;
+  }
+  .footer-grid{
+    grid-template-columns:1.15fr 1fr 1fr 1fr !important;
+    gap:6px !important;
+    padding-top:12px !important;
+  }
+  .footer-brand{
+    margin-bottom:7px !important;
+    font-size:23px !important;
+  }
+  .footer-title{
+    margin-bottom:5px !important;
+    font-size:6.5px !important;
+  }
+  .footer-col p,
+  .footer-col a,
+  footer .footer-socials{
+    margin-bottom:3px !important;
+    font-size:6.5px !important;
+    line-height:1.2 !important;
+  }
+}
+
+/* 360px tuning */
+@media (max-width:374px){
+  .menu{gap:8px !important;font-size:7.5px !important;}
+  .hero-stage{height:398px !important;min-height:398px !important;}
+  .hero-copy{top:184px !important;}
+  .hero-title{font-size:29px !important;}
+  .hero-model{width:59vw !important;}
+}
+
+/* 375-575 tuning */
+@media (min-width:375px) and (max-width:575px){
+  .hero-stage{height:414px !important;min-height:414px !important;}
+  .hero-copy{top:194px !important;}
+  .hero-title{font-size:31px !important;}
+}
+
+/* ---------------------------------------------------------
+   LARGE PHONES / LANDSCAPE: 576-767px
+   --------------------------------------------------------- */
+@media (min-width:576px) and (max-width:767px){
+  .shell{width:calc(100% - 24px) !important;max-width:100% !important;}
+  .brand{display:none !important;}
+  .header-row{grid-template-columns:1fr auto !important;min-height:52px !important;}
+  .menu{
+    display:flex !important;
+    justify-content:flex-start !important;
+    gap:16px !important;
+    overflow-x:auto !important;
+    white-space:nowrap !important;
+    font-size:11px !important;
+  }
+  .toolbar-wrap{height:52px !important;padding:0 9px !important;}
+  .toolbar{gap:9px !important;}
+  .icon-btn{width:24px !important;height:24px !important;}
+
+  .hero-stage{height:590px !important;min-height:590px !important;}
+  .hero-ghost{left:18px !important;top:10px !important;font-size:28vw !important;}
+  .hero-script{left:20px !important;top:106px !important;font-size:50px !important;}
+  .hero-model{right:0 !important;top:36px !important;width:52vw !important;max-width:330px !important;}
+  .hero-copy{left:20px !important;top:260px !important;width:54% !important;}
+  .hero-title{font-size:46px !important;}
+  .hero-text{font-size:16px !important;margin-top:15px !important;}
+  .hero-cta{min-height:46px !important;height:46px !important;margin-top:16px !important;font-size:13px !important;}
+
+  .catalog-grid,.products-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+  #reviews .reviews-grid{grid-template-columns:repeat(4,minmax(0,1fr)) !important;}
+  .promo-two-cards{grid-template-columns:1fr !important;}
+  .promo-card{height:280px !important;grid-template-columns:55% 45% !important;}
+  .online-box{grid-template-columns:1fr 1fr !important;}
+  .footer-grid{grid-template-columns:repeat(4,1fr) !important;}
+}
+</style>
+<style id="byme-v46-mobile-hero-drop-sale-fix">
+/* v46: tighten mobile header and rebuild hero + drop + sale cards */
+.byme-editor-v19,
+.byme-editor-v25,
+.byme-editor,
+[class*="byme-editor"],
+#v25Editor,
+#v19Editor,
+#v25Handle,
+#v19Handle,
+.v19-move-handle,
+.v19-toast,
+.ed-inspector{display:none !important;}
+
+@media (max-width:767px){
+  html,body{overflow-x:hidden !important;}
+  .shell{width:calc(100% - 20px) !important;max-width:100% !important;}
+
+  /* mobile header: row 1 = brand + icons, row 2 = compact nav */
+  .site-header{position:sticky !important;top:0 !important;z-index:90 !important;background:#f5f5f2 !important;}
+  .header-row{
+    display:grid !important;
+    grid-template-columns:1fr auto !important;
+    grid-template-areas:
+      "brand icons"
+      "menu menu" !important;
+    align-items:stretch !important;
+    min-height:auto !important;
+  }
+  .brand{
+    grid-area:brand !important;
+    display:flex !important;
+    align-items:center !important;
+    padding:14px 0 12px !important;
+    font-size:44px !important;
+    line-height:.9 !important;
+    letter-spacing:-.06em !important;
+  }
+  .toolbar-wrap{
+    grid-area:icons !important;
+    height:auto !important;
+    min-height:58px !important;
+    padding:0 12px !important;
+    background:#f6dde6 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+  .toolbar{gap:14px !important;}
+  .icon-btn{width:28px !important;height:28px !important;}
+  .badge{min-width:16px !important;height:16px !important;font-size:9px !important;right:-6px !important;top:-6px !important;}
+  .menu{
+    grid-area:menu !important;
+    display:flex !important;
+    gap:18px !important;
+    padding:12px 0 10px !important;
+    border-top:1px solid var(--line) !important;
+    overflow-x:auto !important;
+    white-space:nowrap !important;
+    scrollbar-width:none !important;
+    font-size:14px !important;
+    font-weight:700 !important;
+  }
+  .menu::-webkit-scrollbar{display:none !important;}
+  .menu a{flex:0 0 auto !important;padding:0 !important;}
+  .menu a::after{bottom:-6px !important;}
+
+  /* hero */
+  .hero{padding-top:0 !important;}
+  .hero-stage{
+    position:relative !important;
+    min-height:610px !important;
+    height:610px !important;
+    overflow:hidden !important;
+    background:linear-gradient(90deg,#f7f7f5 0 72%,#f4e6ea 100%) !important;
+    border:0 !important;
+  }
+  .hero-ghost{
+    left:14px !important;
+    top:8px !important;
+    font-size:31vw !important;
+    line-height:.82 !important;
+    letter-spacing:-.09em !important;
+    white-space:nowrap !important;
+  }
+  .hero-script{
+    left:16px !important;
+    top:104px !important;
+    font-size:56px !important;
+    line-height:.82 !important;
+    transform:rotate(-6deg) !important;
+    white-space:nowrap !important;
+  }
+  .hero-model{
+    right:-8px !important;
+    top:56px !important;
+    bottom:auto !important;
+    width:min(56vw,280px) !important;
+    max-width:none !important;
+  }
+  .hero-copy{
+    left:16px !important;
+    top:260px !important;
+    right:16px !important;
+    width:58% !important;
+    max-width:245px !important;
+  }
+  .hero-title{
+    max-width:245px !important;
+    font-size:58px !important;
+    line-height:.86 !important;
+    letter-spacing:-.045em !important;
+  }
+  .hero-text{
+    margin-top:18px !important;
+    max-width:255px !important;
+    font-size:20px !important;
+    line-height:1.18 !important;
+  }
+  .hero-cta{
+    margin-top:22px !important;
+    min-height:56px !important;
+    height:56px !important;
+    padding:0 24px !important;
+    font-size:16px !important;
+  }
+
+  /* drop + sale */
+  #drop-sale .promo-brand-line{margin:0 0 14px !important;gap:14px !important;}
+  #drop-sale .promo-brand-line strong{font-size:28px !important;letter-spacing:.22em !important;}
+  #drop-sale .promo-two-cards{display:grid !important;grid-template-columns:1fr !important;gap:14px !important;}
+  #drop-sale .promo-card{
+    height:300px !important;
+    min-height:300px !important;
+    display:grid !important;
+    grid-template-columns:56% 44% !important;
+    border-radius:22px !important;
+    overflow:hidden !important;
+  }
+  #drop-sale .promo-copy-col{
+    width:auto !important;
+    height:100% !important;
+    padding:20px 16px 18px 20px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:space-between !important;
+    z-index:3 !important;
+  }
+  #drop-sale .promo-photo-col{
+    position:relative !important;
+    right:auto !important;
+    top:auto !important;
+    width:auto !important;
+    height:100% !important;
+    opacity:1 !important;
+    overflow:hidden !important;
+    display:block !important;
+  }
+  #drop-sale .promo-photo{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center center !important;
+    display:block !important;
+    transform:none !important;
+  }
+  #drop-sale .promo-drop-word{font-size:60px !important;line-height:.82 !important;}
+  #drop-sale .promo-coming{margin:4px 0 0 2px !important;font-size:38px !important;line-height:.85 !important;}
+  #drop-sale .promo-small-copy{font-size:15px !important;line-height:1.18 !important;max-width:190px !important;}
+  #drop-sale .promo-sale-percent{margin:0 !important;font-size:76px !important;line-height:.8 !important;}
+  #drop-sale .promo-sale-title{margin:8px 0 0 !important;font-size:22px !important;line-height:.94 !important;}
+  #drop-sale .promo-main-btn{
+    margin-top:auto !important;
+    min-width:0 !important;
+    width:100% !important;
+    max-width:210px !important;
+    min-height:54px !important;
+    height:54px !important;
+    padding:0 16px !important;
+    font-size:13px !important;
+    gap:12px !important;
+    border-radius:999px !important;
+  }
+  #drop-sale .promo-main-btn span{font-size:24px !important;line-height:1 !important;}
+
+  /* online block is already okay but make it slightly tighter under the new cards */
+  .online-box{border-radius:22px !important;}
+}
+
+@media (max-width:575px){
+  .brand{font-size:42px !important;}
+  .hero-stage{height:574px !important;min-height:574px !important;}
+  .hero-ghost{font-size:33vw !important;top:10px !important;}
+  .hero-script{top:98px !important;font-size:50px !important;}
+  .hero-model{top:64px !important;width:55vw !important;}
+  .hero-copy{top:248px !important;max-width:224px !important;}
+  .hero-title{font-size:52px !important;max-width:224px !important;}
+  .hero-text{font-size:18px !important;max-width:230px !important;}
+  .hero-cta{font-size:14px !important;min-height:52px !important;height:52px !important;padding:0 20px !important;}
+  #drop-sale .promo-card{height:270px !important;min-height:270px !important;grid-template-columns:58% 42% !important;}
+  #drop-sale .promo-copy-col{padding:18px 14px 16px 18px !important;}
+  #drop-sale .promo-drop-word{font-size:52px !important;}
+  #drop-sale .promo-coming{font-size:33px !important;}
+  #drop-sale .promo-small-copy{font-size:13px !important;max-width:165px !important;}
+  #drop-sale .promo-sale-percent{font-size:64px !important;}
+  #drop-sale .promo-sale-title{font-size:19px !important;}
+  #drop-sale .promo-main-btn{max-width:190px !important;min-height:48px !important;height:48px !important;font-size:11.5px !important;}
+}
+
+@media (max-width:390px){
+  .shell{width:calc(100% - 16px) !important;}
+  .brand{font-size:40px !important;}
+  .menu{gap:14px !important;font-size:13px !important;}
+  .hero-stage{height:544px !important;min-height:544px !important;}
+  .hero-script{font-size:44px !important;top:92px !important;}
+  .hero-copy{top:234px !important;max-width:205px !important;}
+  .hero-title{font-size:46px !important;max-width:205px !important;}
+  .hero-text{font-size:17px !important;max-width:210px !important;}
+  #drop-sale .promo-card{height:250px !important;min-height:250px !important;}
+  #drop-sale .promo-drop-word{font-size:48px !important;}
+  #drop-sale .promo-coming{font-size:30px !important;}
+  #drop-sale .promo-small-copy{font-size:12px !important;}
+  #drop-sale .promo-sale-percent{font-size:58px !important;}
+}
+</style>
+<style id="byme-v49-mobile-final-tune">
+  @media (max-width:767px){
+    /* HEADER: no pink block, icons pushed to the far right */
+    .header-row{
+      display:grid !important;
+      grid-template-columns:68px 1fr auto !important;
+      align-items:center !important;
+      min-height:58px !important;
+      background:#f5f5f2 !important;
+      overflow:visible !important;
+    }
+    .brand,.menu{display:none !important;}
+    .mobile-burger{
+      display:flex !important;
+      width:68px !important;
+      min-width:68px !important;
+      height:58px !important;
+      background:#f5f5f2 !important;
+      border:0 !important;
+      align-items:center !important;
+      justify-content:center !important;
+      flex-direction:column !important;
+      gap:6px !important;
+      padding:0 !important;
+    }
+    .mobile-burger span{
+      width:28px !important;height:2px !important;background:#111 !important;border-radius:99px !important;display:block !important;
+    }
+    .toolbar-wrap{
+      grid-column:3 !important;
+      height:58px !important;
+      min-height:58px !important;
+      width:auto !important;
+      padding:0 10px 0 8px !important;
+      margin-left:auto !important;
+      background:transparent !important;
+      border:0 !important;
+      justify-content:flex-end !important;
+    }
+    .toolbar{
+      display:flex !important;
+      align-items:center !important;
+      justify-content:flex-end !important;
+      gap:12px !important;
+      width:auto !important;
+    }
+    .icon-btn{width:28px !important;height:28px !important;flex:0 0 28px !important;}
+
+    .mobile-menu-panel{
+      position:absolute !important;left:0 !important;right:0 !important;top:100% !important;z-index:120 !important;
+      display:flex !important;flex-direction:column !important;background:#f5f5f2 !important;
+      border-top:1px solid var(--line) !important;border-bottom:1px solid var(--line) !important;
+      box-shadow:0 16px 30px rgba(0,0,0,.08) !important;
+      opacity:0 !important;visibility:hidden !important;transform:translateY(-8px) !important;pointer-events:none !important;
+      transition:opacity .2s ease,transform .2s ease,visibility .2s ease !important;
+    }
+    .mobile-menu-panel.is-open{opacity:1 !important;visibility:visible !important;transform:none !important;pointer-events:auto !important;}
+    .mobile-menu-panel a{display:block !important;padding:16px 20px !important;font-size:17px !important;font-weight:700 !important;border-bottom:1px solid rgba(0,0,0,.08) !important;}
+    .mobile-menu-panel a:last-child{border-bottom:0 !important;}
+
+    /* HERO: tighten vertical composition */
+    .hero{margin:0 !important;padding:0 !important;}
+    .hero .shell.hero-stage{
+      width:100vw !important;max-width:none !important;margin-left:calc(50% - 50vw) !important;margin-right:calc(50% - 50vw) !important;
+    }
+    .hero-stage{
+      height:420px !important;min-height:420px !important;overflow:hidden !important;
+      background:linear-gradient(90deg,#f7f7f5 0%,#f7f7f5 72%,#f4e6ea 100%) !important;
+    }
+    .hero-ghost{left:14px !important;top:8px !important;font-size:34vw !important;line-height:.82 !important;}
+    .hero-script{left:14px !important;top:98px !important;font-size:43px !important;}
+    .hero-model{
+      right:-22px !important;top:46px !important;width:47vw !important;max-width:196px !important;
+    }
+    .hero-copy{
+      left:14px !important;top:194px !important;right:auto !important;width:auto !important;max-width:218px !important;z-index:5 !important;
+    }
+    .hero-title{
+      margin:0 !important;font-size:32px !important;line-height:.90 !important;letter-spacing:-.035em !important;max-width:218px !important;
+    }
+    .hero-title .hero-line{
+      display:block !important;white-space:nowrap !important;
+    }
+    .hero-text{
+      margin-top:8px !important;font-size:14px !important;line-height:1.15 !important;width:255px !important;max-width:none !important;white-space:nowrap !important;
+    }
+    .hero-cta{
+      margin-top:12px !important;min-height:46px !important;height:46px !important;padding:0 20px !important;font-size:13px !important;
+    }
+
+    /* Remove empty band before catalog */
+    #catalog.section{
+      margin-top:0 !important;padding-top:6px !important;
+    }
+  }
+
+  @media (max-width:430px){
+    .header-row{grid-template-columns:64px 1fr auto !important;}
+    .toolbar{gap:10px !important;}
+    .toolbar-wrap{padding-right:8px !important;}
+    .hero-stage{height:405px !important;min-height:405px !important;}
+    .hero-ghost{font-size:35vw !important;}
+    .hero-script{top:92px !important;font-size:41px !important;}
+    .hero-model{right:-24px !important;top:44px !important;width:48vw !important;max-width:186px !important;}
+    .hero-copy{top:186px !important;max-width:205px !important;}
+    .hero-title{font-size:30px !important;max-width:205px !important;}
+    .hero-text{width:245px !important;font-size:13.5px !important;}
+    .hero-cta{height:45px !important;min-height:45px !important;font-size:12.5px !important;}
+  }
+
+  @media (max-width:375px){
+    .toolbar{gap:8px !important;}
+    .hero-stage{height:392px !important;min-height:392px !important;}
+    .hero-script{top:88px !important;font-size:39px !important;}
+    .hero-model{right:-26px !important;top:44px !important;width:49vw !important;max-width:178px !important;}
+    .hero-copy{top:180px !important;max-width:195px !important;}
+    .hero-title{font-size:28.5px !important;max-width:195px !important;}
+    .hero-text{width:235px !important;font-size:13px !important;}
+  }
+</style>
+<style id="byme-v51-mobile-drop-sale">
+/* Меняем ТОЛЬКО мобильные карточки ДРОП + РАСПРОДАЖА.
+   Главный экран, каталог, хиты, отзывы, инфо и подвал не трогаем. */
+
+@media (max-width:575px){
+
+  #drop-sale .promo-two-cards{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+    width:100% !important;
+  }
+
+  #drop-sale .promo-card{
+    position:relative !important;
+    display:grid !important;
+    grid-template-columns:55% 45% !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:222px !important;
+    min-height:222px !important;
+    border-radius:18px !important;
+    overflow:hidden !important;
+    box-shadow:none !important;
+  }
+
+  #drop-sale .promo-copy-col{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    width:100% !important;
+    height:100% !important;
+    padding:20px 10px 16px 20px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    z-index:3 !important;
+  }
+
+  #drop-sale .promo-photo-col{
+    position:relative !important;
+    inset:auto !important;
+    right:auto !important;
+    top:auto !important;
+    transform:none !important;
+    width:100% !important;
+    height:100% !important;
+    opacity:1 !important;
+    display:block !important;
+    overflow:hidden !important;
+    z-index:2 !important;
+  }
+
+  #drop-sale .promo-photo{
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    max-width:none !important;
+    object-fit:cover !important;
+    transform:none !important;
+    opacity:1 !important;
+    filter:none !important;
+  }
+
+  #drop-sale .promo-drop .promo-photo{
+    object-position:center 38% !important;
+  }
+
+  #drop-sale .promo-sale .promo-photo{
+    object-position:center 50% !important;
+  }
+
+  /* DROP */
+  #drop-sale .promo-drop-word{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    width:auto !important;
+    height:auto !important;
+    margin:0 !important;
+    font-size:43px !important;
+    line-height:.82 !important;
+    letter-spacing:-.06em !important;
+  }
+
+  #drop-sale .promo-coming{
+    position:relative !important;
+    inset:auto !important;
+    width:auto !important;
+    height:auto !important;
+    margin:4px 0 22px 1px !important;
+    font-size:29px !important;
+    line-height:.8 !important;
+    transform:rotate(-5deg) !important;
+    white-space:nowrap !important;
+  }
+
+  #drop-sale .promo-small-copy{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    width:auto !important;
+    height:auto !important;
+    margin:0 !important;
+    font-size:12px !important;
+    line-height:1.17 !important;
+    letter-spacing:-.02em !important;
+  }
+
+  /* SALE */
+  #drop-sale .promo-sale-percent{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    width:auto !important;
+    height:auto !important;
+    margin:0 !important;
+    font-size:54px !important;
+    line-height:.78 !important;
+    letter-spacing:-.06em !important;
+  }
+
+  #drop-sale .promo-sale-title{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    width:auto !important;
+    height:auto !important;
+    margin:12px 0 18px !important;
+    font-size:17px !important;
+    line-height:.95 !important;
+  }
+
+  /* Обе кнопки стоят внизу слева, как на референсе */
+  #drop-sale .promo-main-btn{
+    position:relative !important;
+    inset:auto !important;
+    left:auto !important;
+    right:auto !important;
+    top:auto !important;
+    bottom:auto !important;
+    transform:none !important;
+
+    margin-top:auto !important;
+    width:100% !important;
+    max-width:172px !important;
+    min-width:0 !important;
+    height:44px !important;
+    min-height:44px !important;
+
+    padding:0 14px !important;
+    border-radius:999px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:12px !important;
+
+    font-size:10px !important;
+    line-height:1 !important;
+    white-space:nowrap !important;
+  }
+
+  #drop-sale .promo-main-btn span{
+    font-size:18px !important;
+    line-height:1 !important;
+  }
+}
+
+/* 360 px */
+@media (max-width:374px){
+  #drop-sale .promo-card{
+    height:210px !important;
+    min-height:210px !important;
+    grid-template-columns:56% 44% !important;
+  }
+
+  #drop-sale .promo-copy-col{
+    padding:18px 9px 14px 17px !important;
+  }
+
+  #drop-sale .promo-drop-word{
+    font-size:40px !important;
+  }
+
+  #drop-sale .promo-coming{
+    font-size:26px !important;
+    margin-bottom:18px !important;
+  }
+
+  #drop-sale .promo-small-copy{
+    font-size:11px !important;
+  }
+
+  #drop-sale .promo-sale-percent{
+    font-size:50px !important;
+  }
+
+  #drop-sale .promo-sale-title{
+    font-size:15px !important;
+    margin:10px 0 15px !important;
+  }
+
+  #drop-sale .promo-main-btn{
+    max-width:160px !important;
+    font-size:9px !important;
+  }
+}
+
+/* 576–767: тот же принцип, только немного крупнее */
+@media (min-width:576px) and (max-width:767px){
+  #drop-sale .promo-two-cards{
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+  }
+
+  #drop-sale .promo-card{
+    width:100% !important;
+    height:300px !important;
+    min-height:300px !important;
+    grid-template-columns:55% 45% !important;
+  }
+
+  #drop-sale .promo-copy-col{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    width:100% !important;
+    height:100% !important;
+    padding:28px 18px 24px 28px !important;
+  }
+
+  #drop-sale .promo-photo-col{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:100% !important;
+    opacity:1 !important;
+  }
+
+  #drop-sale .promo-photo{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+  }
+
+  #drop-sale .promo-drop-word{
+    position:relative !important;
+    inset:auto !important;
+    width:auto !important;
+    height:auto !important;
+    font-size:58px !important;
+  }
+
+  #drop-sale .promo-coming{
+    font-size:39px !important;
+    margin:5px 0 28px 2px !important;
+  }
+
+  #drop-sale .promo-small-copy{
+    font-size:16px !important;
+  }
+
+  #drop-sale .promo-sale-percent{
+    position:relative !important;
+    inset:auto !important;
+    width:auto !important;
+    font-size:76px !important;
+  }
+
+  #drop-sale .promo-sale-title{
+    position:relative !important;
+    inset:auto !important;
+    margin:15px 0 22px !important;
+    font-size:24px !important;
+  }
+
+  #drop-sale .promo-main-btn{
+    position:relative !important;
+    inset:auto !important;
+    transform:none !important;
+    margin-top:auto !important;
+    width:100% !important;
+    max-width:220px !important;
+    min-width:0 !important;
+    height:50px !important;
+    min-height:50px !important;
+    font-size:12px !important;
+  }
+}
+</style>
+<style id="byme-v52-footer-mobile-spacing">
+@media (max-width:575px){
+  footer .footer-catalog-col,
+  footer .footer-buyers-col,
+  footer .footer-grid > .footer-col:last-child{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+  }
+  footer .footer-catalog-col > a,
+  footer .footer-buyers-col > a,
+  footer .footer-grid > .footer-col:last-child > a{
+    display:flex !important;
+    align-items:center !important;
+    width:max-content !important;
+    max-width:100% !important;
+    min-height:22px !important;
+    margin:0 0 7px !important;
+    line-height:1.2 !important;
+  }
+  footer .footer-catalog-col > a:last-child,
+  footer .footer-buyers-col > a:last-child{
+    margin-bottom:0 !important;
+  }
+  footer .footer-grid > .footer-col:last-child .footer-socials{
+    display:flex !important;
+    align-items:center !important;
+    flex-wrap:wrap !important;
+    min-height:22px !important;
+    margin:0 !important;
+    line-height:1.2 !important;
+  }
+  footer .footer-grid > .footer-col:last-child .footer-socials a{
+    display:inline-flex !important;
+    align-items:center !important;
+    min-height:22px !important;
+    margin:0 !important;
+  }
+  footer .footer-grid > .footer-col:last-child .footer-socials span{
+    margin:0 3px !important;
+  }
+}
+@media (min-width:576px) and (max-width:767px){
+  footer .footer-catalog-col,
+  footer .footer-buyers-col,
+  footer .footer-grid > .footer-col:last-child{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+  }
+  footer .footer-catalog-col > a,
+  footer .footer-buyers-col > a,
+  footer .footer-grid > .footer-col:last-child > a{
+    display:flex !important;
+    align-items:center !important;
+    min-height:26px !important;
+    margin:0 0 8px !important;
+  }
+  footer .footer-grid > .footer-col:last-child .footer-socials{
+    min-height:26px !important;
+    margin:0 !important;
+  }
+}
+</style>
+<style id="byme-v53-shop-css">
+  .product-fav.is-favorite{
+    background:#ff4774 !important;
+  }
+  .product-fav.is-favorite svg{
+    fill:#fff !important;
+    stroke:#fff !important;
+  }
+
+  .byme-search-panel{
+    position:fixed; inset:0; z-index:9998;
+    background:rgba(0,0,0,.28);
+    display:flex; justify-content:center; align-items:flex-start;
+    padding:90px 18px 20px;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .2s ease,visibility .2s ease;
+  }
+  .byme-search-panel.is-open{
+    opacity:1; visibility:visible; pointer-events:auto;
+  }
+  .byme-search-box{
+    width:min(720px,100%);
+    background:#f7f5f1;
+    border-radius:24px;
+    padding:24px;
+    box-shadow:0 24px 70px rgba(0,0,0,.18);
+    position:relative;
+  }
+  .byme-search-title{
+    font-family:"Cormorant Garamond",serif;
+    font-size:52px; line-height:.9; margin-bottom:18px;
+  }
+  .byme-search-close{
+    position:absolute; right:18px; top:16px;
+    width:40px; height:40px; border:0; border-radius:999px;
+    background:#fff; font-size:28px; cursor:pointer;
+  }
+  #bymeSearchInput{
+    width:100%; height:52px; border:1px solid #aaa;
+    border-radius:999px; padding:0 20px;
+    font:16px Inter,sans-serif; background:#fff;
+  }
+  .byme-search-results{
+    display:grid; gap:10px; margin-top:16px;
+    max-height:55vh; overflow:auto;
+  }
+  .byme-search-result{
+    display:grid; grid-template-columns:64px 1fr auto;
+    gap:12px; align-items:center;
+    text-decoration:none; color:#111;
+    background:#fff; padding:8px; border-radius:14px;
+  }
+  .byme-search-result img{
+    width:64px; height:76px; object-fit:cover; border-radius:10px;
+  }
+  .byme-search-result strong{font:700 14px Inter,sans-serif;}
+  .byme-search-result span{font:12px Inter,sans-serif;color:#666;}
+  .byme-search-result b{font:700 14px Inter,sans-serif;white-space:nowrap;}
+  .byme-search-empty{
+    font:14px Inter,sans-serif; color:#666; padding:14px 4px;
+  }
+
+  .byme-page-main{
+    max-width:1440px; margin:0 auto; padding:120px 44px 80px;
+  }
+  .byme-page-kicker{
+    font:700 12px Inter,sans-serif; letter-spacing:.18em;
+    text-transform:uppercase; margin-bottom:6px;
+  }
+  .byme-page-title{
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(68px,9vw,130px); line-height:.82;
+    margin:0 0 34px; letter-spacing:-.05em;
+  }
+  .saved-grid{
+    display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:24px 16px;
+  }
+  .saved-card{position:relative;}
+  .saved-media{aspect-ratio:3/4;overflow:hidden;background:#eee;}
+  .saved-media img{width:100%;height:100%;object-fit:cover;}
+  .saved-card h3{font:700 15px Inter,sans-serif;margin:12px 0 4px;}
+  .saved-card .saved-price{font:700 15px Inter,sans-serif;}
+  .saved-actions{display:flex;gap:8px;margin-top:10px;}
+  .saved-actions button{
+    min-height:46px;border-radius:999px;padding:0 16px;
+    font:700 12px Inter,sans-serif;text-transform:uppercase;cursor:pointer;
+  }
+  .saved-cart{background:#111;color:#fff;border:1px solid #111;flex:1;}
+  .saved-remove{background:#fff;color:#111;border:1px solid #111;}
+  .saved-empty{
+    font:16px Inter,sans-serif;padding:30px 0;color:#666;
+  }
+
+  .cart-layout{
+    display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);
+    gap:42px;align-items:start;
+  }
+  .cart-list{display:grid;gap:14px;}
+  .cart-row{
+    display:grid;grid-template-columns:110px 1fr auto;
+    gap:18px;align-items:center;padding:14px;
+    background:#fff;border:1px solid #e1ded8;border-radius:18px;
+  }
+  .cart-row img{width:110px;height:135px;object-fit:cover;border-radius:12px;}
+  .cart-row h3{font:700 16px Inter,sans-serif;margin:0 0 6px;}
+  .cart-row p{font:13px Inter,sans-serif;color:#666;margin:0 0 10px;}
+  .cart-price{font:700 16px Inter,sans-serif;white-space:nowrap;}
+  .qty-controls{display:flex;align-items:center;gap:8px;}
+  .qty-controls button{
+    width:34px;height:34px;border:1px solid #111;border-radius:999px;
+    background:#fff;cursor:pointer;
+  }
+  .cart-remove{
+    margin-top:10px;border:0;background:none;text-decoration:underline;
+    font:12px Inter,sans-serif;cursor:pointer;padding:0;
+  }
+  .checkout-box{
+    position:sticky;top:110px;background:#111;color:#fff;
+    border-radius:24px;padding:24px;
+  }
+  .checkout-box h2{
+    font-family:"Cormorant Garamond",serif;font-size:42px;
+    margin:0 0 18px;line-height:.9;
+  }
+  .checkout-total{
+    display:flex;justify-content:space-between;font:700 18px Inter,sans-serif;
+    padding:16px 0;border-top:1px solid rgba(255,255,255,.2);
+  }
+  .checkout-form{display:grid;gap:10px;margin-top:14px;}
+  .checkout-form input{
+    height:48px;border-radius:999px;border:0;padding:0 16px;
+    font:14px Inter,sans-serif;
+  }
+  .checkout-form button{
+    height:52px;border:0;border-radius:999px;
+    background:#ff4774;color:#fff;font:800 13px Inter,sans-serif;
+    text-transform:uppercase;cursor:pointer;
+  }
+
+  @media(max-width:767px){
+    .byme-search-panel{padding-top:74px;}
+    .byme-search-box{border-radius:18px;padding:18px;}
+    .byme-search-title{font-size:42px;}
+    .byme-page-main{padding:86px 16px 54px;}
+    .byme-page-title{font-size:56px;margin-bottom:24px;}
+    .saved-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px;}
+    .saved-card h3{font-size:13px;}
+    .cart-layout{grid-template-columns:1fr;gap:22px;}
+    .cart-row{grid-template-columns:82px 1fr;gap:12px;}
+    .cart-row img{width:82px;height:105px;}
+    .cart-price{grid-column:2;}
+    .checkout-box{position:relative;top:auto;}
+  }
+</style>
+
+<style id="byme-v54-catalog">
+  body{background:#f4f7f5;color:#111;}
+  .wb-cat-main{max-width:1420px;margin:0 auto;padding:110px 30px 80px;}
+  .wb-cat-kicker{
+    font:700 12px Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .wb-cat-title{
+    margin:0 0 18px;font-family:"Cormorant Garamond",serif;
+    font-size:clamp(72px,9vw,132px);line-height:.8;letter-spacing:-.05em;
+  }
+  .wb-cat-lead{
+    max-width:680px;margin:0 0 34px;font:16px/1.5 Inter,sans-serif;color:#4a4a4a;
+  }
+  .wb-cat-toolbar{
+    display:flex;justify-content:space-between;align-items:center;gap:18px;
+    padding:18px 0 28px;border-top:1px solid rgba(0,0,0,.12);
+  }
+  .wb-cat-status{font:13px Inter,sans-serif;color:#6d6d6d;}
+  .wb-cat-grid{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;
+  }
+  .wb-card{
+    background:#fff;border:1px solid rgba(0,0,0,.13);border-radius:22px;
+    overflow:hidden;display:flex;flex-direction:column;min-width:0;
+    transition:transform .25s ease,box-shadow .25s ease;
+  }
+  .wb-card:hover{transform:translateY(-4px);box-shadow:0 18px 42px rgba(0,0,0,.08);}
+  .wb-gallery{
+    padding:12px 12px 0;display:grid;grid-template-rows:auto auto;gap:7px;
+  }
+  .wb-main-media{
+    position:relative;aspect-ratio:4/3;background:#ecefec;border-radius:15px;overflow:hidden;
+  }
+  .wb-main-media img{width:100%;height:100%;object-fit:cover;display:block;}
+  .wb-card-loader{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font:12px Inter,sans-serif;color:#737373;background:#f0f1ef;
+  }
+  .wb-card-loader.hide{display:none;}
+  .wb-thumbs{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:6px;min-height:70px;
+  }
+  .wb-thumb{
+    border:0;padding:0;background:#ecefec;border-radius:9px;overflow:hidden;cursor:pointer;
+    aspect-ratio:1.22/1;
+  }
+  .wb-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .wb-thumb.active{outline:2px solid #ff4774;outline-offset:-2px;}
+  .wb-card-body{padding:15px 16px 18px;display:flex;flex-direction:column;flex:1;}
+  .wb-card-title{
+    margin:0;font:800 20px/1.05 Inter,sans-serif;letter-spacing:-.03em;
+  }
+  .wb-article{
+    margin:5px 0 12px;font:11px Inter,sans-serif;color:#858585;letter-spacing:.13em;
+    text-transform:uppercase;
+  }
+  .wb-color-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+  .wb-label{
+    font:10px Inter,sans-serif;color:#8a8a8a;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .wb-color-name{font:700 12px Inter,sans-serif;text-transform:uppercase;}
+  .wb-size-label{margin-bottom:7px;}
+  .wb-sizes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:17px;}
+  .wb-size{
+    min-width:39px;height:37px;padding:0 9px;border:1px solid #cdd1cf;background:#fff;
+    border-radius:8px;font:700 12px Inter,sans-serif;cursor:pointer;
+    transition:.18s ease;
+  }
+  .wb-size:hover,.wb-size.selected{background:#111;color:#fff;border-color:#111;}
+  .wb-price{
+    margin-top:auto;margin-bottom:12px;font:800 27px/1 Inter,sans-serif;letter-spacing:-.04em;
+  }
+  .wb-add{
+    width:100%;height:52px;border:0;border-radius:999px;background:#ff4774;color:#fff;
+    font:800 13px Inter,sans-serif;text-transform:uppercase;cursor:pointer;
+    transition:transform .2s ease,background .2s ease;
+  }
+  .wb-add:hover{background:#111;transform:translateY(-2px);}
+  .wb-buy-wb{
+    display:flex;justify-content:center;align-items:center;min-height:44px;margin-top:7px;
+    border:1px solid #d0d3d1;border-radius:999px;color:#111;text-decoration:none;
+    font:700 12px Inter,sans-serif;
+  }
+  .wb-buy-wb:hover{text-decoration:underline;}
+  .wb-buy-ozon{
+    display:flex;justify-content:center;align-items:center;min-height:36px;color:#8a8a8a;
+    text-decoration:none;font:12px Inter,sans-serif;
+  }
+  .wb-buy-ozon:hover{color:#111;text-decoration:underline;}
+  .wb-note{font:11px/1.35 Inter,sans-serif;color:#8a8a8a;margin-top:7px;}
+  .wb-error{
+    padding:22px;font:13px/1.4 Inter,sans-serif;color:#777;
+  }
+
+  @media(max-width:1050px){
+    .wb-cat-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media(max-width:767px){
+    .wb-cat-main{padding:86px 12px 54px;}
+    .wb-cat-title{font-size:58px;margin-bottom:14px;}
+    .wb-cat-lead{font-size:15px;margin-bottom:24px;}
+    .wb-cat-grid{grid-template-columns:1fr;gap:14px;}
+    .wb-card{border-radius:18px;}
+    .wb-card-title{font-size:19px;}
+    .wb-main-media{aspect-ratio:1.22/1;}
+    .wb-thumbs{min-height:62px;}
+    .wb-add{height:48px;}
+  }
+</style>
+</head><body><header class="site-header">
+<div class="shell header-row">
+<button aria-expanded="false" aria-label="Открыть меню" class="mobile-burger" id="mobileBurger" type="button">
+<span></span><span></span><span></span>
+</button><a class="brand" href="index.html">BYME</a>
+<nav aria-label="Основное меню" class="menu">
+<a href="catalog.html">Каталог</a>
+<a href="index.html#drop-sale">Дроп</a>
+<a href="index.html#drop-sale">Распродажа</a>
+<a href="index.html#hits">Хиты</a>
+<a href="index.html#info-section" id="header-delivery-link">Доставка и оплата</a>
+</nav>
+<div class="toolbar-wrap">
+<div class="toolbar">
+<button aria-label="Поиск" class="icon-btn" data-action="search">
+<svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l5 5"></path></svg>
+</button>
+<button aria-label="Личный кабинет" class="icon-btn" data-action="account">
+<svg viewbox="0 0 24 24"><path d="M12 13a5 5 0 1 0-5-5 5 5 0 0 0 5 5z"></path><path d="M3.5 21a8.5 8.5 0 0 1 17 0"></path></svg>
+</button>
+<button aria-label="Избранное" class="icon-btn" data-action="favorites">
+<svg viewbox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.45A5.55 5.55 0 0 1 7.19 4c1.9 0 3.23.95 4.81 2.9C13.58 4.95 14.91 4 16.81 4a5.55 5.55 0 0 1 4.69 8.55C19 16.65 12 21 12 21z"></path></svg>
+<span class="badge" id="favBadge">0</span>
+</button>
+<button aria-label="Корзина" class="icon-btn" data-action="cart">
+<svg viewbox="0 0 24 24"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.3 10.2a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.77L21 8H7"></path></svg>
+<span class="badge" id="cartBadge">0</span>
+</button>
+</div>
+</div>
+</div>
+<nav aria-label="Мобильное меню" class="mobile-menu-panel" id="mobileMenu">
+<a href="catalog.html">Каталог</a>
+<a href="index.html#drop-sale">Дроп</a>
+<a href="index.html#drop-sale">Распродажа</a>
+<a href="index.html#hits">Хиты</a>
+<a href="index.html#info-section">Доставка и оплата</a>
+</nav>
+</header>
+<main class="wb-cat-main">
+<div class="wb-cat-kicker">ВСЕ ВЕЩИ BYME</div>
+<h1 class="wb-cat-title">КАТАЛОГ</h1>
+<p class="wb-cat-lead">Выбирай модель, цвет и размер. Карточки подтягивают актуальные данные с Wildberries, а выбранные вещи можно добавить в корзину BYME.</p>
+<div class="wb-cat-toolbar">
+<div class="wb-cat-status" id="catalogStatus">12 товаров</div>
+</div>
+<section class="wb-cat-grid" id="wbCatalogGrid">
+<article class="wb-card" data-nm="860429671">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 860429671" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 860429671</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/860429671/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=860429671" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="449178108">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 449178108" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 449178108</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/449178108/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=449178108" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="404550762">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 404550762" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 404550762</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/404550762/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=404550762" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="404550760">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 404550760" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 404550760</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/404550760/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=404550760" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="878914130">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 878914130" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 878914130</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/878914130/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=878914130" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="236688990">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 236688990" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 236688990</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/236688990/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=236688990" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="1136648140">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 1136648140" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 1136648140</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/1136648140/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=1136648140" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="465616693">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 465616693" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 465616693</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/465616693/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=465616693" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="1084114635">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 1084114635" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 1084114635</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/1084114635/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=1084114635" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="282233016">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 282233016" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 282233016</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/282233016/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=282233016" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="1309485898">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 1309485898" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 1309485898</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/1309485898/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=1309485898" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+<article class="wb-card" data-nm="1238720434">
+<div class="wb-gallery">
+<div class="wb-main-media">
+<img alt="Товар Wildberries 1238720434" class="wb-main-img"/>
+<div class="wb-card-loader">Загружаю товар…</div>
+</div>
+<div class="wb-thumbs"></div>
+</div>
+<div class="wb-card-body">
+<h2 class="wb-card-title">Товар BYME</h2>
+<div class="wb-article">АРТИКУЛ WB 1238720434</div>
+<div class="wb-color-row">
+<span class="wb-label">Цвет:</span>
+<span class="wb-color-name">загружается</span>
+</div>
+<div class="wb-label wb-size-label">Размер</div>
+<div class="wb-sizes"><span class="wb-note">Загружаю размеры…</span></div>
+<div class="wb-price">—</div>
+<button class="wb-add" type="button">ДОБАВИТЬ В КОРЗИНУ</button>
+<a class="wb-buy-wb" href="https://www.wildberries.ru/catalog/1238720434/detail.aspx" rel="noopener" target="_blank">Купить на WB</a>
+<a class="wb-buy-ozon" href="https://www.ozon.ru/search/?text=1238720434" rel="noopener" target="_blank">Купить на OZON</a>
+</div>
+</article>
+</section>
+</main>
+<footer>
+<div class="shell footer-grid">
+<div class="footer-col">
+<div class="footer-brand" data-pro-edit="1" data-pro-id="pro-60" data-pro-resize="1" data-pro-text="1">BYME</div>
+<p data-pro-edit="1" data-pro-id="pro-61" data-pro-resize="1" data-pro-text="1">Твой стиль. Твои правила.</p>
+<p data-pro-edit="1" data-pro-id="pro-62" data-pro-resize="1" data-pro-text="1">© BYME 2026. Все права защищены.</p>
+</div>
+<div class="footer-col footer-catalog-col">
+<div class="footer-title" data-pro-edit="1" data-pro-id="pro-63" data-pro-resize="1" data-pro-text="1">Каталог</div>
+<a href="#catalog">Верх</a>
+<a href="#catalog">Низ</a>
+<a href="#catalog">Платья</a>
+<a href="#catalog">Верхняя одежда</a>
+<a href="#catalog">Аксессуары</a>
+</div>
+<div class="footer-col footer-buyers-col">
+<div class="footer-title" data-pro-edit="1" data-pro-id="pro-69" data-pro-resize="1" data-pro-text="1">Покупателям</div>
+<a href="#reviews">Доставка и оплата</a>
+<a href="#reviews">Возврат и обмен</a>
+<a href="#catalog">Таблица размеров</a>
+<a href="#reviews">Уход за вещами</a>
+<a href="#reviews">FAQ</a>
+</div>
+<div class="footer-col">
+<div class="footer-title" data-pro-edit="1" data-pro-id="pro-75" data-pro-resize="1" data-pro-text="1">Контакты</div>
+<a href="mailto:byme.store@gmail.com">byme.store@gmail.com</a>
+<a href="tel:+79024374467">+7 (902) 437-44-67</a>
+<div class="footer-socials"><a href="https://t.me/" rel="noopener noreferrer" target="_blank">Telegram</a><span> · </span><a href="https://www.tiktok.com/" rel="noopener noreferrer" target="_blank">TikTok</a><span> · </span><a href="https://www.instagram.com/" rel="noopener noreferrer" target="_blank">Instagram</a></div>
+</div>
+</div>
+</footer>
+<script id="byme-v54-wb-catalog-runtime">
+(() => {
+  const NM_IDS = [860429671, 449178108, 404550762, 404550760, 878914130, 236688990, 1136648140, 465616693, 1084114635, 282233016, 1309485898, 1238720434];
+  const DEST = '-1216601,-115136,-421732,123585595';
+  const BASKETS = Array.from({length:60}, (_,i) => String(i+1).padStart(2,'0'));
+
+  const money = n => n ? Math.round(n/100).toLocaleString('ru-RU') + ' ₽' : 'Цена на WB';
+  const getCart = () => JSON.parse(localStorage.getItem('byme-cart') || '[]');
+  const setCart = c => localStorage.setItem('byme-cart', JSON.stringify(c));
+  const getFavs = () => JSON.parse(localStorage.getItem('byme-favorites') || '[]');
+
+  function cacheProduct(p) {
+    const cache = JSON.parse(localStorage.getItem('byme-products-cache') || '{}');
+    cache[p.id] = p;
+    localStorage.setItem('byme-products-cache', JSON.stringify(cache));
+  }
+
+  function updateBadge() {
+    const cart = getCart();
+    const count = cart.reduce((s,x)=>s+(x.qty||1),0);
+    document.querySelectorAll('#cartBadge').forEach(x=>x.textContent=count);
+    document.querySelectorAll('#favBadge').forEach(x=>x.textContent=getFavs().length);
+  }
+
+  function showToast(text) {
+    let t = document.getElementById('toast');
+    if(!t) {
+      t = document.createElement('div');
+      t.id='toast'; t.className='toast'; document.body.appendChild(t);
+    }
+    t.textContent=text; t.classList.add('show');
+    clearTimeout(window.__t); window.__t=setTimeout(()=>t.classList.remove('show'),1400);
+  }
+
+  async function loadCardData(nm) {
+    const url = `https://card.wb.ru/cards/v4/detail?nm=${nm}&locale=ru&dest=${encodeURIComponent(DEST)}`;
+    const r = await fetch(url, {mode:'cors', credentials:'omit'});
+    if(!r.ok) throw new Error('WB card API');
+    const j = await r.json();
+    const p = (j.products || j.data?.products || [])[0];
+    if(!p) throw new Error('Нет карточки');
+    return p;
+  }
+
+  function probeImage(url) {
+    return new Promise(resolve => {
+      const img = new Image();
+      const timer = setTimeout(()=>resolve(false), 2200);
+      img.onload = () => {clearTimeout(timer);resolve(true);};
+      img.onerror = () => {clearTimeout(timer);resolve(false);};
+      img.src = url;
+    });
+  }
+
+  async function findImageHost(nm) {
+    const cached = localStorage.getItem('wb-host-'+nm);
+    if(cached) return cached;
+    const vol = Math.floor(nm/100000);
+    const part = Math.floor(nm/1000);
+
+    // Быстрый диапазон: новые товары чаще лежат в корзинах 20–60.
+    const candidates = [...BASKETS.slice(19), ...BASKETS.slice(0,19)];
+    for (let i=0; i<candidates.length; i+=8) {
+      const batch = candidates.slice(i,i+8);
+      const results = await Promise.all(batch.map(async b => {
+        const url=`https://basket-${b}.wbbasket.ru/vol${vol}/part${part}/${nm}/images/big/1.webp`;
+        return (await probeImage(url)) ? b : null;
+      }));
+      const hit = results.find(Boolean);
+      if(hit) {
+        localStorage.setItem('wb-host-'+nm,hit);
+        return hit;
+      }
+    }
+    return null;
+  }
+
+  function imageUrl(nm, host, i) {
+    const vol=Math.floor(nm/100000), part=Math.floor(nm/1000);
+    return `https://basket-${host}.wbbasket.ru/vol${vol}/part${part}/${nm}/images/big/${i}.webp`;
+  }
+
+  function extractPrice(p) {
+    const sizes = p.sizes || [];
+    for(const s of sizes) {
+      if(s.price?.product) return s.price.product;
+      if(s.price?.basic) return s.price.basic;
+    }
+    return p.salePriceU || p.priceU || 0;
+  }
+
+  function sizeNames(p) {
+    return (p.sizes || [])
+      .map(s => (s.name || s.origName || '').trim())
+      .filter(Boolean)
+      .filter((x,i,a)=>a.indexOf(x)===i);
+  }
+
+  async function hydrateCard(card) {
+    const nm = Number(card.dataset.nm);
+    const loader = card.querySelector('.wb-card-loader');
+    const title = card.querySelector('.wb-card-title');
+    const color = card.querySelector('.wb-color-name');
+    const sizesRoot = card.querySelector('.wb-sizes');
+    const priceRoot = card.querySelector('.wb-price');
+    const mainImg = card.querySelector('.wb-main-img');
+    const thumbs = card.querySelector('.wb-thumbs');
+    const addBtn = card.querySelector('.wb-add');
+    const ozon = card.querySelector('.wb-buy-ozon');
+
+    let wb = null, host = null;
+    try { wb = await loadCardData(nm); } catch(e) {}
+    try { host = await findImageHost(nm); } catch(e) {}
+
+    if(wb) {
+      title.textContent = wb.name || 'Товар BYME';
+      color.textContent = (wb.colors || []).map(c=>c.name).join(', ') || 'не указан';
+      const sns = sizeNames(wb);
+      sizesRoot.innerHTML = sns.length
+        ? sns.map(s=>`<button type="button" class="wb-size" data-size="${s}">${s}</button>`).join('')
+        : '<span class="wb-note">Единый размер</span>';
+      priceRoot.textContent = money(extractPrice(wb));
+      ozon.href = 'https://www.ozon.ru/search/?text=' + encodeURIComponent(wb.name || String(nm));
+    } else {
+      title.textContent = 'Товар BYME';
+      color.textContent = 'см. на WB';
+      sizesRoot.innerHTML = '<span class="wb-note">Размеры доступны на WB</span>';
+      priceRoot.textContent = 'Цена на WB';
+    }
+
+    if(host) {
+      const pics = Math.min(Math.max(Number(wb?.pics || 4),1),6);
+      const urls = Array.from({length:pics},(_,i)=>imageUrl(nm,host,i+1));
+      mainImg.src = urls[0];
+      loader.classList.add('hide');
+      thumbs.innerHTML = urls.slice(0,4).map((u,i)=>`
+        <button type="button" class="wb-thumb ${i===0?'active':''}" data-src="${u}">
+          <img src="${u}" alt="">
+        </button>`).join('');
+      thumbs.querySelectorAll('.wb-thumb').forEach(b=>b.addEventListener('click',()=>{
+        mainImg.src=b.dataset.src;
+        thumbs.querySelectorAll('.wb-thumb').forEach(x=>x.classList.toggle('active',x===b));
+      }));
+    } else {
+      loader.textContent='Фото откроется на Wildberries';
+    }
+
+    sizesRoot.querySelectorAll('.wb-size').forEach(btn=>btn.addEventListener('click',()=>{
+      sizesRoot.querySelectorAll('.wb-size').forEach(x=>x.classList.remove('selected'));
+      btn.classList.add('selected');
+    }));
+
+    const product = {
+      id:'wb-'+nm,
+      nm,
+      title: wb?.name || 'Товар BYME',
+      price: priceRoot.textContent,
+      priceNumber: extractPrice(wb || {}) ? Math.round(extractPrice(wb)/100) : 0,
+      category:'Каталог',
+      description:'Артикул WB '+nm,
+      image: mainImg.src || '',
+      color: color.textContent,
+      wbUrl:'https://www.wildberries.ru/catalog/'+nm+'/detail.aspx',
+      ozonUrl:ozon.href
+    };
+    cacheProduct(product);
+
+    addBtn.addEventListener('click',()=>{
+      const chosen = sizesRoot.querySelector('.wb-size.selected')?.dataset.size || '';
+      if(sizesRoot.querySelectorAll('.wb-size').length && !chosen) {
+        showToast('Выберите размер');
+        return;
+      }
+      const cart=getCart();
+      const existing=cart.find(x=>x.id===product.id && (x.size||'')===chosen);
+      if(existing) existing.qty=(existing.qty||1)+1;
+      else cart.push({id:product.id,qty:1,size:chosen,...product});
+      setCart(cart); updateBadge(); showToast('Добавлено в корзину');
+    });
+  }
+
+  // Header behavior on the catalog page.
+  document.querySelectorAll('[data-action="cart"]').forEach(b=>b.addEventListener('click',e=>{
+    e.preventDefault(); location.href='cart.html';
+  }));
+  document.querySelectorAll('[data-action="favorites"]').forEach(b=>b.addEventListener('click',e=>{
+    e.preventDefault(); location.href='favorites.html';
+  }));
+
+  updateBadge();
+  document.querySelectorAll('.wb-card').forEach(hydrateCard);
+})();
+</script>
+</body></html>
