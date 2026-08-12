@@ -1,0 +1,35 @@
+BYME: как подключить сбор регистраций, корзины и заказов
+
+1. Создайте НОВУЮ Google Таблицу для аналитики сайта.
+2. Откройте Расширения -> Apps Script.
+3. Вставьте содержимое файла google_sheets_backend.gs.
+4. Нажмите Deploy -> New deployment -> Web app.
+5. Execute as: Me.
+6. Who has access: Anyone.
+7. Скопируйте URL веб-приложения.
+8. В файлах сайта найдите строку:
+   window.BYME_TRACKING_ENDPOINT = window.BYME_TRACKING_ENDPOINT || '';
+   и впишите URL между кавычками.
+
+После этого автоматически будут создаваться листы:
+- Users
+- Events
+- Orders
+- OrderItems
+
+Путь пользователя:
+page_view -> add_to_cart -> order_submitted
+
+Событие add_to_cart содержит:
+товар, артикул, размер, цвет, цену, количество.
+
+ВАЖНО:
+- пароль на сайте вообще не используется;
+- order_submitted означает, что клиент отправил форму заказа;
+- событие purchase можно считать только после успешной оплаты.
+  Когда подключим платежный сервис, purchase нужно писать с серверного webhook платежной системы.
+
+Если нужен именно файл Microsoft Excel Online, а не Google Sheets:
+GitHub Pages сам не может безопасно записывать данные в локальный .xlsx.
+Тогда делается связка сайт -> сервер/Power Automate -> Excel Online в OneDrive.
+Для текущего сайта Google Sheets + Apps Script проще и надежнее, а таблицу можно в любой момент скачать как .xlsx.
